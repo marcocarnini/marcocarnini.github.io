@@ -53,7 +53,7 @@
 </div></div>
 		</header>
 		<figure class="post__thumbnail">
-			<img src="/static/img/placeholder.jpg" alt="Setting up the site">
+			<img src="/img/first.png" alt="Setting up the site">
 		</figure>
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
@@ -152,7 +152,7 @@ avatar = &quot;img/avatar.png&quot;
 
 [Params.widgets.social]
   # Enable parts of social widget
-  twitter = &quot;marcocarnini&quot;
+  twitter = &quot;marcocarnini_&quot;
   linkedin = &quot;marcocarnini&quot;
   github = &quot;marcocarnini&quot;
   gitlab = &quot;fa.mc&quot;
@@ -169,13 +169,13 @@ title: &quot;Setting Up Hugo&quot;
 date: 2020-04-04T20:16:20+02:00
 draft: true
 ---
-</code></pre><p>I added the following lines to the file <code>content/posts/setting-up-hugo.md</code>:</p>
+</code></pre><p>I added the following lines to the file <code>content/posts/setting-up-hugo.md</code> (this is the so called <a href="https://gohugo.io/content-management/front-matter/">Front Matter</a>):</p>
 <pre><code>---
 title: &quot;Setting up the site&quot;
 date: 2020-04-04T20:16:20+02:00
 description: &quot;How this site was set up&quot;
 summary: &quot;How this site was set up with **hugo** and the theme **mainroad**.&quot;
-thumbnail: &quot;img/placeholder.jpg&quot; # Optional, thumbnail
+thumbnail: &quot;/img/first.png&quot; # Optional, thumbnail
 disable_comments: true # Optional, disable Disqus comments if true
 authorbox: true # Optional, enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post
@@ -213,7 +213,7 @@ Running in Fast Render Mode. For full rebuilds on change: hugo server --disableF
 Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
 </code></pre><p>Going to <code>http://localhost:1313/</code> through the browser:</p>
-<p><img src="img/first.png" alt="First post of the site"></p>
+<p><img src="/img/first.png" alt="First post of the site"></p>
 
 		</div>
 		<footer class="post__footer">
