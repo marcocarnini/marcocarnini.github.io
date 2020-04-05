@@ -48,7 +48,7 @@
 			<h1 class="post__title">Setting up the site</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-04T20:16:20&#43;02:00">2020-04-04</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/miscellanea/" rel="category">Miscellanea</a>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-04T20:16:20&#43;02:00">2020-04-04</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/site/" rel="category">Site</a>
 	</span>
 </div></div>
 		</header>
@@ -65,6 +65,7 @@
     <li><a href="#basic-configuration">Basic Configuration</a></li>
     <li><a href="#creating-a-first-post">Creating a first post</a></li>
     <li><a href="#preview-of-the-site">Preview of the site</a></li>
+    <li><a href="#bringing-to-github-pages">Bringing to github pages</a></li>
   </ul>
 </nav>
 	</div>
@@ -73,9 +74,9 @@
 			<p>.</p>
 <p>This is of course a <em>a posteriori</em> rationalization of the procedure I followed: I omitted all the mistakes and the troubles with setting the proper paths for the images.</p>
 <h2 id="installing-the-software">Installing the software</h2>
-<p>I currently work under Ubuntu 18.04 LTS (more properly, <a href="https://ubuntu.com/tutorials/tutorial-ubuntu-on-windows#1-overview">Ubuntu on Windows</a>). As I want to use <code>hugo</code>, a fast static site generator written in <code>go</code>. As a first step, I need to install <code>go</code> with the terminal:</p>
+<p>I currently work under Ubuntu 18.04 LTS (more properly, <a href="https://ubuntu.com/tutorials/tutorial-ubuntu-on-windows#1-overview">Ubuntu on Windows</a>). As I want to use <code>hugo</code>, a fast static site generator written in <code>go</code>, I need first to install <code>go</code> from the terminal:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install golang
-</code></pre></div><p>After installing <code>go</code>, instead of installing <code>hugo</code> through <code>apt-get</code> (the installed version 0.4 would be old 0.4) I followed the <a href="https://computingforgeeks.com/how-to-install-hugo-on-ubuntu-debian/">following guide</a>. The first step is to download the last <code>deb</code> package from command line:</p>
+</code></pre></div><p>After this, rather than installing <code>hugo</code> through <code>apt-get</code> (the installed version 0.4 would be old) I followed <a href="https://computingforgeeks.com/how-to-install-hugo-on-ubuntu-debian/">the guide</a>. The first step is to download the last <code>deb</code> package from command line:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span> | grep  browser_download_url <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span> | grep Linux-64bit.deb <span style="color:#ae81ff">\
@@ -96,7 +97,7 @@ GOVERSION=&quot;go1.14.1&quot;
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">hugo new site mysite
 cd mysite
 git init
-</code></pre></div><p>Now a theme should be chosen <a href="https://themes.gohugo.io/">from the gallery</a>. For personal taste I chose <a href="https://themes.gohugo.io/mainroad/">Mainroad</a>. The next step is to clone the repository of the theme inside the theme folder (as a submodule):</p>
+</code></pre></div><p>Now I have to choose a theme <a href="https://themes.gohugo.io/">from the gallery</a>. For personal taste I chose <a href="https://themes.gohugo.io/mainroad/">Mainroad</a>. The next step is to clone the repository of the theme inside the theme folder (as a submodule):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git submodule add https://github.com/Vimux/mainroad themes/mainroad
 </code></pre></div><p>Then the theme is added to the configuration file:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#39;theme = &#34;mainroad&#34;&#39;</span> &gt;&gt; config.toml
@@ -106,7 +107,7 @@ languageCode = &quot;en-us&quot;
 title = &quot;My New Hugo Site&quot;
 theme = &quot;mainroad&quot;
 </code></pre><h2 id="basic-configuration">Basic Configuration</h2>
-<p>First, I edited the configuration file of the blog <a href="https://github.com/Vimux/mainroad">according to the example in the Github page</a>:</p>
+<p>First, I edited the configuration file for the blog <a href="https://github.com/Vimux/mainroad">according to the example in the Github page</a>:</p>
 <pre><code>baseURL = &quot;http://example.org/&quot;
 languageCode = &quot;en-us&quot;
 title = &quot;The Blog of a Curious Data Scientist&quot;
@@ -157,7 +158,7 @@ avatar = &quot;img/avatar.png&quot;
   github = &quot;marcocarnini&quot;
   gitlab = &quot;fa.mc&quot;
   email = &quot;marcocarnini@gmail.com&quot;
-</code></pre><p>Then, I created an image folder <code>img</code> inside the <code>static</code> folder for containing the avatar (<code>avatar.png</code>); but the content of <code>static</code> will be moved in the folder <code>public</code>, the rootf folder for the site. That&rsquo;s why the path in the configuration file is for <code>img/avatar.png</code></p>
+</code></pre><p>Then, I created an image folder <code>img</code> inside the <code>static</code> folder for containing the avatar (<code>avatar.png</code>); the content of <code>static</code> will be moved in the folder <code>public</code>, the root folder for the site. That&rsquo;s why the path in the configuration file is for <code>img/avatar.png</code></p>
 <h2 id="creating-a-first-post">Creating a first post</h2>
 <p>Then, I can generate a first post</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">hugo new posts/setting-up-hugo.md
@@ -185,7 +186,7 @@ categories:
 tags:
   - &quot;Hugo&quot;
 ---
-</code></pre><p>The summary is the preview</p>
+</code></pre><p>The summary is the preview that will be visualized on the site main page.</p>
 <h2 id="preview-of-the-site">Preview of the site</h2>
 <p>Then I start the hugo server:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">hugo server -D
@@ -214,7 +215,14 @@ Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
 </code></pre><p>Going to <code>http://localhost:1313/</code> through the browser:</p>
 <p><img src="/img/first.png" alt="First post of the site"></p>
-
+<h2 id="bringing-to-github-pages">Bringing to github pages</h2>
+<p>In order to create a <a href="https://pages.github.com">github page</a> and going online, a new repository has to be created on GitHub. For me, <code>marcocarnini.github.io</code>. After that, the content on folder <code>public</code> should be pushed to the new repository. But before pushing, the configuration file <code>config.toml</code> should be modified with a new value for <code>baseURL</code>:</p>
+<pre><code>baseURL = &quot;http://example.org/&quot;
+...
+</code></pre><p>to:</p>
+<pre><code>baseURL = &quot;http://marcocarnini.github.io&quot;
+...
+</code></pre>
 		</div>
 		<footer class="post__footer">
 			
@@ -223,6 +231,9 @@ Press Ctrl+C to stop
 	<ul class="tags__list">
 		<li class="tags__item">
 			<a class="tags__link btn" href="/tags/hugo/" rel="tag">Hugo</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/git/" rel="tag">git</a>
 		</li>
 	</ul>
 </div>

@@ -8,12 +8,12 @@
   </url>
   
   <url>
-    <loc>http://marcocarnini.github.io/tags/hugo/</loc>
+    <loc>http://marcocarnini.github.io/tags/git/</loc>
     <lastmod>2020-04-04T20:16:20+02:00</lastmod>
   </url>
   
   <url>
-    <loc>http://marcocarnini.github.io/categories/miscellanea/</loc>
+    <loc>http://marcocarnini.github.io/tags/hugo/</loc>
     <lastmod>2020-04-04T20:16:20+02:00</lastmod>
   </url>
   
@@ -24,6 +24,11 @@
   
   <url>
     <loc>http://marcocarnini.github.io/posts/setting-up-hugo/</loc>
+    <lastmod>2020-04-04T20:16:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marcocarnini.github.io/categories/site/</loc>
     <lastmod>2020-04-04T20:16:20+02:00</lastmod>
   </url>
   
