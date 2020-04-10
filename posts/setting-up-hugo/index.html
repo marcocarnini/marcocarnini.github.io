@@ -4,19 +4,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Setting up the site - The Blog of a Curious Data Scientist</title>
+	<title>Setting up this site - The Blog of a Passionate Data Scientist</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="How this site was set up">
-	<meta property="og:title" content="Setting up the site" />
-<meta property="og:description" content="How this site was set up" />
+	<meta name="description" content="How this site was set up with **hugo** and **mainroad**">
+	<meta property="og:title" content="Setting up this site" />
+<meta property="og:description" content="How this site was set up with **hugo** and **mainroad**" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://marcocarnini.github.io/posts/setting-up-hugo/" />
 <meta property="article:published_time" content="2020-04-04T20:16:20+02:00" />
 <meta property="article:modified_time" content="2020-04-04T20:16:20+02:00" />
 
 	<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Setting up the site"/>
-<meta name="twitter:description" content="How this site was set up"/>
+<meta name="twitter:title" content="Setting up this site"/>
+<meta name="twitter:description" content="How this site was set up with **hugo** and **mainroad**"/>
 
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -31,12 +31,34 @@
 		<header class="header">
 	<div class="container">
 		<div class="logo">
-			<a class="logo__link" href="/" title="The Blog of a Curious Data Scientist" rel="home">
-				<div class="logo__title">The Blog of a Curious Data Scientist</div>
+			<a class="logo__link" href="/" title="The Blog of a Passionate Data Scientist" rel="home">
+				<div class="logo__title">The Blog of a Passionate Data Scientist</div>
 				<div class="logo__tagline">Books, articles and experiments about Machine Learning</div>
 			</a>
 		</div>
-		<div class="divider"></div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About Me</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/howto/">
+				
+				<span class="menu__text">How to...</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
 	</div>
 </header>
 		<div class="wrapper flex">
@@ -45,7 +67,7 @@
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Setting up the site</h1>
+			<h1 class="post__title">Setting up this site</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-04T20:16:20&#43;02:00">2020-04-04</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/site/" rel="category">Site</a>
@@ -53,7 +75,7 @@
 </div></div>
 		</header>
 		<figure class="post__thumbnail">
-			<img src="/img/first.png" alt="Setting up the site">
+			<img src="/img/first.png" alt="Setting up this site">
 		</figure>
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
@@ -66,17 +88,19 @@
     <li><a href="#creating-a-first-post">Creating a first post</a></li>
     <li><a href="#preview-of-the-site">Preview of the site</a></li>
     <li><a href="#bringing-to-github-pages">Bringing to github pages</a></li>
+    <li><a href="#the-cookie-banner">The cookie banner</a></li>
   </ul>
 </nav>
 	</div>
 </div>
 <div class="content post__content clearfix">
 			<p>.</p>
-<p>This is of course a <em>a posteriori</em> rationalization of the procedure I followed: I omitted all the mistakes and the troubles with setting the proper paths for the images.</p>
+<p>This is of course a <em>a posteriori</em> rationalization of the procedure I followed: I omitted all the mistakes and the troubles with setting the proper paths for the images. I chose a static site generator for the possibility of converting straight from Jupyter to the site. Thus I picked a tool that supported as input Markdown (exporting from Jupyter to Markdown is as simple as &ldquo;Downloading as md&rdquo;).</p>
+<p>Another reasons is that I really like <a href="https://idlewords.com/talks/website_obesity.htm">this article on website obesity crisis</a>. While not trying to optimize too much, I will try as a form of respect to never exceed Dante&rsquo;s <em>Divina Commedia</em> (539 kb <a href="http://www.hoepliscuola.it/download/2842/la-divina-commedia-txt.aspx">as a txt file</a>).</p>
 <h2 id="installing-the-software">Installing the software</h2>
 <p>I currently work under Ubuntu 18.04 LTS (more properly, <a href="https://ubuntu.com/tutorials/tutorial-ubuntu-on-windows#1-overview">Ubuntu on Windows</a>). As I want to use <code>hugo</code>, a fast static site generator written in <code>go</code>, I need first to install <code>go</code> from the terminal:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install golang
-</code></pre></div><p>After this, rather than installing <code>hugo</code> through <code>apt-get</code> (the installed version 0.4 would be old) I followed <a href="https://computingforgeeks.com/how-to-install-hugo-on-ubuntu-debian/">the guide</a>. The first step is to download the last <code>deb</code> package from command line:</p>
+</code></pre></div><p>After this, rather than installing <code>hugo</code> through <code>apt-get</code> (the installed version 0.4 would be old) I followed <a href="https://computingforgeeks.com/how-to-install-hugo-on-ubuntu-debian/">the guide</a>. The first step is to download the last <code>deb</code> package from the command line:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span> | grep  browser_download_url <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span> | grep Linux-64bit.deb <span style="color:#ae81ff">\
@@ -158,9 +182,9 @@ avatar = &quot;img/avatar.png&quot;
   github = &quot;marcocarnini&quot;
   gitlab = &quot;fa.mc&quot;
   email = &quot;marcocarnini@gmail.com&quot;
-</code></pre><p>Then, I created an image folder <code>img</code> inside the <code>static</code> folder for containing the avatar (<code>avatar.png</code>); the content of <code>static</code> will be moved in the folder <code>public</code>, the root folder for the site. That&rsquo;s why the path in the configuration file is for <code>img/avatar.png</code></p>
+</code></pre><p>Then, I created an image folder <code>img</code> inside the <code>static</code> folder containing the avatar (<code>avatar.png</code>); the content of <code>static</code> will be moved in the folder <code>public</code>, the root folder for the site.</p>
 <h2 id="creating-a-first-post">Creating a first post</h2>
-<p>Then, I can generate a first post</p>
+<p>Then, I can generate a first post:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">hugo new posts/setting-up-hugo.md
 </code></pre></div><p>I used simply <code>more</code> to inspect the first Markdown post:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">more content/posts/setting-up-hugo.md
@@ -213,16 +237,22 @@ Serving pages from memory
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
 Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
-</code></pre><p>Going to <code>http://localhost:1313/</code> through the browser:</p>
+</code></pre><p>Going to <code>http://localhost:1313/</code> through the browser the site looks like this:</p>
 <p><img src="/img/first.png" alt="First post of the site"></p>
 <h2 id="bringing-to-github-pages">Bringing to github pages</h2>
-<p>In order to create a <a href="https://pages.github.com">github page</a> and going online, a new repository has to be created on GitHub. For me, <code>marcocarnini.github.io</code>. After that, the content on folder <code>public</code> should be pushed to the new repository. But before pushing, the configuration file <code>config.toml</code> should be modified with a new value for <code>baseURL</code>:</p>
+<p>In order to create a <a href="https://pages.github.com">github page</a> and going online, a new repository has to be created on GitHub. For me, <code>marcocarnini.github.io</code>. After that, the content on folder <code>public</code> should be pushed to the new repository. But before pushing, the configuration file <code>config.toml</code> should be modified with a new value for <code>baseURL</code>, from:</p>
 <pre><code>baseURL = &quot;http://example.org/&quot;
 ...
 </code></pre><p>to:</p>
 <pre><code>baseURL = &quot;http://marcocarnini.github.io&quot;
 ...
-</code></pre>
+</code></pre><h2 id="the-cookie-banner">The cookie banner</h2>
+<p>In order to add a cookie banner, I applied the easiest solution I could find (I found it <a href="https://cookie-bar.eu/">here</a>).</p>
+<p>I put the banner over the footer, so I modify the <code>mainroad</code> theme, and specifically the file:</p>
+<pre><code>themes/mainroad/layouts/partials/footer.html
+</code></pre><p>by adding the following line at the beginning of the file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?always=1&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -253,12 +283,21 @@ Press Ctrl+C to stop
 	</div>
 </div>
 
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/2020-09-04-data-preparation/" rel="next">
+			<span class="post-nav__caption">Next&thinsp;»</span>
+			<p class="post-nav__post-title">Pump It Up – Data Exploration</p>
+		</a>
+	</div>
+</nav>
 
 
 			</div>
 			
 		</div>
-		<footer class="footer">
+		
+<footer class="footer">
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
@@ -266,7 +305,10 @@ Press Ctrl+C to stop
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>
+
 </footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?thirdparty=1&always=1&blocking=1"></script>
+
 	</div>
 <script async defer src="/js/menu.js"></script>
 

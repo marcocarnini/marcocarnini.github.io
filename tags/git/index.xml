@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>git on The Blog of a Curious Data Scientist</title>
+    <title>git on The Blog of a Passionate Data Scientist</title>
     <link>http://marcocarnini.github.io/tags/git/</link>
-    <description>Recent content in git on The Blog of a Curious Data Scientist</description>
+    <description>Recent content in git on The Blog of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 04 Apr 2020 20:16:20 +0200</lastBuildDate>
@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Setting up the site</title>
+      <title>Setting up this site</title>
       <link>http://marcocarnini.github.io/posts/setting-up-hugo/</link>
       <pubDate>Sat, 04 Apr 2020 20:16:20 +0200</pubDate>
       

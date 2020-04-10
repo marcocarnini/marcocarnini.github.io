@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Pump It Up – Data Exploration - The Blog of a Passionate Data Scientist</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Exploring data for the Pump-it-Up competition.">
+	<meta property="og:title" content="Pump It Up – Data Exploration" />
+<meta property="og:description" content="Exploring data for the Pump-it-Up competition." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://marcocarnini.github.io/posts/2020-09-04-data-preparation/" />
+<meta property="article:published_time" content="2020-04-08T00:13:28+02:00" />
+<meta property="article:modified_time" content="2020-04-08T00:13:28+02:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Pump It Up – Data Exploration"/>
+<meta name="twitter:description" content="Exploring data for the Pump-it-Up competition."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="The Blog of a Passionate Data Scientist" rel="home">
+				<div class="logo__title">The Blog of a Passionate Data Scientist</div>
+				<div class="logo__tagline">Books, articles and experiments about Machine Learning</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About Me</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/howto/">
+				
+				<span class="menu__text">How to...</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Pump It Up – Data Exploration</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-08T00:13:28&#43;02:00">2020-04-08</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/competitions/" rel="category">Competitions</a>
+	</span>
+</div></div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/water.jpg" alt="Pump It Up – Data Exploration">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#competition-description">Competition description</a></li>
+    <li><a href="#variables-description">Variables Description</a></li>
+    <li><a href="#reading-the-data">Reading the data</a></li>
+    <li><a href="#inspecting-columns">Inspecting columns</a></li>
+    <li><a href="#missing-values">Missing values</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>Photo by <a href="https://unsplash.com/@thenata?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Anastasia Taioglou</a> on <a href="https://unsplash.com/s/photos/water?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<h2 id="competition-description">Competition description</h2>
+<p>The problem come from <a href="https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/">Driven Data</a>. The problem is, quoting verbatim the goal of the competition:</p>
+<blockquote>
+<p>Using data from Taarifa and the Tanzanian Ministry of Water, can you predict which pumps are functional, which need some repairs, and which don&rsquo;t work at all? This is an intermediate-level practice competition. Predict one of these three classes based on a number of variables about what kind of pump is operating, when it was installed, and how it is managed. A smart understanding of which waterpoints will fail can improve maintenance operations and ensure that clean, potable water is available to communities across Tanzania.</p>
+</blockquote>
+<p>Formally, it is a classification problems with three (imbalanced) classes, with a mixture of categorical and numerical variables. Four files can be downloaded, namely:</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>Filename</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">SubmissionFormat.csv</td>
+<td align="left">An example of the expected output</td>
+</tr>
+<tr>
+<td align="center">702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv</td>
+<td align="left">Test set</td>
+</tr>
+<tr>
+<td align="center">4910797b-ee55-40a7-8668-10efd5c1b960.csv</td>
+<td align="left">Train set</td>
+</tr>
+<tr>
+<td align="center">0bf8bc6e-30d0-4c50-956a-603fc693d966.csv</td>
+<td align="left">Labels</td>
+</tr>
+</tbody>
+</table>
+<p>Usually, I create a repository with this structure:</p>
+<pre><code>README.md
+    input
+    scripts
+    submissions
+</code></pre><p>I saved the data inside <code>input</code>, all the scripts in <code>scripts</code> and submissions in <code>submissions</code>.</p>
+<h2 id="variables-description">Variables Description</h2>
+<p>The column description is reported verbatim from the <a href="https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/25/">problem description page</a>:</p>
+<ul>
+<li><strong>amount_tsh</strong> - Total static head (amount water available to waterpoint)</li>
+<li><strong>date_recorded</strong> - The date the row was entered</li>
+<li><strong>funder</strong> - Who funded the well</li>
+<li><strong>gps_height</strong> - Altitude of the well</li>
+<li><strong>installer</strong> - Organization that installed the well</li>
+<li><strong>longitude</strong> - GPS coordinate</li>
+<li><strong>latitude</strong> - GPS coordinate</li>
+<li><strong>wpt_name</strong> - Name of the waterpoint if there is one</li>
+<li><strong>num_private</strong> -</li>
+<li><strong>basin</strong> - Geographic water basin</li>
+<li><strong>subvillage</strong> - Geographic location</li>
+<li><strong>region</strong> - Geographic location</li>
+<li><strong>region_code</strong> - Geographic location (coded)</li>
+<li><strong>district_code</strong> - Geographic location (coded)</li>
+<li><strong>lga</strong> - Geographic location</li>
+<li><strong>ward</strong> - Geographic location</li>
+<li><strong>population</strong> - Population around the well</li>
+<li><strong>public_meeting</strong> - True/False</li>
+<li><strong>recorded_by</strong> - Group entering this row of data</li>
+<li><strong>scheme_management</strong> - Who operates the waterpoint</li>
+<li><strong>scheme_name</strong> - Who operates the waterpoint</li>
+<li><strong>permit</strong> - If the waterpoint is permitted</li>
+<li><strong>construction_year</strong> - Year the waterpoint was constructed</li>
+<li><strong>extraction_type</strong> - The kind of extraction the waterpoint uses</li>
+<li><strong>extraction_type_group</strong> - The kind of extraction the waterpoint uses</li>
+<li><strong>extraction_type_class</strong> - The kind of extraction the waterpoint uses</li>
+<li><strong>management</strong> - How the waterpoint is managed</li>
+<li><strong>management_group</strong> - How the waterpoint is managed</li>
+<li><strong>payment</strong> - What the water costs</li>
+<li><strong>payment_type</strong> - What the water costs</li>
+<li><strong>water_quality</strong> - The quality of the water</li>
+<li><strong>quality_group</strong> - The quality of the water</li>
+<li><strong>quantity</strong> - The quantity of water</li>
+<li><strong>quantity_group</strong> - The quantity of water</li>
+<li><strong>source</strong> - The source of the water</li>
+<li><strong>source_type</strong> - The source of the water</li>
+<li><strong>source_class</strong> - The source of the water</li>
+<li><strong>waterpoint_type</strong> - The kind of waterpoint</li>
+<li><strong>waterpoint_type_group</strong> - The kind of waterpoint</li>
+</ul>
+<h2 id="reading-the-data">Reading the data</h2>
+<p>The first step is to check how the submission look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+
+submission <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/SubmissionFormat.csv&#34;</span>)
+<span style="color:#66d9ef">print</span>(submission<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">id</th>
+<th align="left">status_group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">50785</td>
+<td align="left">predicted label</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">51630</td>
+<td align="left">predicted label</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">17168</td>
+<td align="left">predicted label</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">45559</td>
+<td align="left">predicted label</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">49871</td>
+<td align="left">predicted label</td>
+</tr>
+</tbody>
+</table>
+<p>The second step is inspecting the train set (for clarity, only the first six columns and rows), with a look to the size:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/4910797b-ee55-40a7-8668-10efd5c1b960.csv&#34;</span>)
+temp <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">6</span>, [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]]
+<span style="color:#66d9ef">print</span>(temp<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">amount_tsh</th>
+<th align="left">date_recorded</th>
+<th align="left">funder</th>
+<th align="right">gps_height</th>
+<th align="left">installer</th>
+<th align="right">longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">2013-03-06</td>
+<td align="left">Grumeti</td>
+<td align="right">1399</td>
+<td align="left">GRUMETI</td>
+<td align="right">34.6988</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">25</td>
+<td align="left">2013-02-25</td>
+<td align="left">Lottery Club</td>
+<td align="right">686</td>
+<td align="left">World vision</td>
+<td align="right">37.4607</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="left">2013-01-28</td>
+<td align="left">Unicef</td>
+<td align="right">263</td>
+<td align="left">UNICEF</td>
+<td align="right">38.4862</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="left">2011-07-13</td>
+<td align="left">Action In A</td>
+<td align="right">0</td>
+<td align="left">Artisan</td>
+<td align="right">31.1308</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">20</td>
+<td align="left">2011-03-13</td>
+<td align="left">Mkinga Distric Coun</td>
+<td align="right">0</td>
+<td align="left">DWE</td>
+<td align="right">39.1728</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(59400, 40)
+</code></pre>
+<p>That is, there are 59 400 rows with 40 columns. Equivalently, I follow the same procedure for the test set:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">test <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv&#34;</span>)
+temp <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">6</span>, [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]]
+<span style="color:#66d9ef">print</span>(temp<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">amount_tsh</th>
+<th align="left">date_recorded</th>
+<th align="left">funder</th>
+<th align="right">gps_height</th>
+<th align="left">installer</th>
+<th align="right">longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">2013-02-04</td>
+<td align="left">Government Of Tanzania</td>
+<td align="right">1569</td>
+<td align="left">DWE</td>
+<td align="right">36.6567</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="left">2013-02-01</td>
+<td align="left">nan</td>
+<td align="right">1567</td>
+<td align="left">nan</td>
+<td align="right">34.7679</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="left">2013-01-22</td>
+<td align="left">Finn Water</td>
+<td align="right">267</td>
+<td align="left">FINN WATER</td>
+<td align="right">38.058</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">500</td>
+<td align="left">2013-03-27</td>
+<td align="left">Bruder</td>
+<td align="right">1260</td>
+<td align="left">BRUDER</td>
+<td align="right">35.0061</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="left">2013-03-04</td>
+<td align="left">Government Of Tanzania</td>
+<td align="right">1685</td>
+<td align="left">DWE</td>
+<td align="right">36.6853</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">test<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(14850, 40)
+</code></pre>
+<p>I also explored the labels to estimate their frequency on the training set:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">labels <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/0bf8bc6e-30d0-4c50-956a-603fc693d966.csv&#34;</span>)
+<span style="color:#66d9ef">print</span>(labels<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">id</th>
+<th align="left">status_group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">69572</td>
+<td align="left">functional</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">8776</td>
+<td align="left">functional</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">34310</td>
+<td align="left">functional</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">67743</td>
+<td align="left">non functional</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">19728</td>
+<td align="left">functional</td>
+</tr>
+</tbody>
+</table>
+<p>A bar plot for visualizing the class frequencies:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">frequencies <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#34;frequency&#34;</span>: labels[<span style="color:#e6db74">&#34;status_group&#34;</span>]<span style="color:#f92672">.</span>value_counts()<span style="color:#f92672">/</span><span style="color:#ae81ff">59400</span>})<span style="color:#f92672">.</span>reset_index()
+frequencies<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;label&#34;</span>, <span style="color:#e6db74">&#34;frequency&#34;</span>]
+<span style="color:#66d9ef">print</span>(frequencies<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">label</th>
+<th align="right">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">functional</td>
+<td align="right">0.543081</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">non functional</td>
+<td align="right">0.384242</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">functional needs repair</td>
+<td align="right">0.0726768</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">6</span>))
+plt<span style="color:#f92672">.</span>barh([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>], labels[<span style="color:#e6db74">&#34;status_group&#34;</span>]<span style="color:#f92672">.</span>value_counts()<span style="color:#f92672">/</span><span style="color:#ae81ff">59400</span>,
+         tick_label<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Functional&#34;</span>, <span style="color:#e6db74">&#34;Non Functional&#34;</span>, <span style="color:#e6db74">&#34;Functional needs repair&#34;</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Fraction of the observations&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-label.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tight&#39;</span>)
+</code></pre></div><p><img src="/img/piu-label.png" alt="Frequencies of the labels"></p>
+<h2 id="inspecting-columns">Inspecting columns</h2>
+<p>How many distinct values are present? What types?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">columns <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#34;column&#34;</span>: train<span style="color:#f92672">.</span>columns,
+    <span style="color:#e6db74">&#34;unique values&#34;</span>: [len(train[i]<span style="color:#f92672">.</span>unique()) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> train<span style="color:#f92672">.</span>columns],
+    <span style="color:#e6db74">&#34;types&#34;</span>: list(train<span style="color:#f92672">.</span>dtypes)
+})
+<span style="color:#66d9ef">print</span>(columns<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">column</th>
+<th align="right">unique values</th>
+<th align="left">types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">id</td>
+<td align="right">59400</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">amount_tsh</td>
+<td align="right">98</td>
+<td align="left">float64</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">date_recorded</td>
+<td align="right">356</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">funder</td>
+<td align="right">1898</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">gps_height</td>
+<td align="right">2428</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">installer</td>
+<td align="right">2146</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">longitude</td>
+<td align="right">57516</td>
+<td align="left">float64</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">latitude</td>
+<td align="right">57517</td>
+<td align="left">float64</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">wpt_name</td>
+<td align="right">37400</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">num_private</td>
+<td align="right">65</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="left">basin</td>
+<td align="right">9</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="left">subvillage</td>
+<td align="right">19288</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="left">region</td>
+<td align="right">21</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="left">region_code</td>
+<td align="right">27</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="left">district_code</td>
+<td align="right">20</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="left">lga</td>
+<td align="right">125</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="left">ward</td>
+<td align="right">2092</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="left">population</td>
+<td align="right">1049</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="left">public_meeting</td>
+<td align="right">3</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="left">recorded_by</td>
+<td align="right">1</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td align="left">scheme_management</td>
+<td align="right">13</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td align="left">scheme_name</td>
+<td align="right">2697</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td align="left">permit</td>
+<td align="right">3</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td align="left">construction_year</td>
+<td align="right">55</td>
+<td align="left">int64</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td align="left">extraction_type</td>
+<td align="right">18</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td align="left">extraction_type_group</td>
+<td align="right">13</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td align="left">extraction_type_class</td>
+<td align="right">7</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td align="left">management</td>
+<td align="right">12</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td align="left">management_group</td>
+<td align="right">5</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td align="left">payment</td>
+<td align="right">7</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td align="left">payment_type</td>
+<td align="right">7</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">31</td>
+<td align="left">water_quality</td>
+<td align="right">8</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="left">quality_group</td>
+<td align="right">6</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td align="left">quantity</td>
+<td align="right">5</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">34</td>
+<td align="left">quantity_group</td>
+<td align="right">5</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">35</td>
+<td align="left">source</td>
+<td align="right">10</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">36</td>
+<td align="left">source_type</td>
+<td align="right">7</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">37</td>
+<td align="left">source_class</td>
+<td align="right">3</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">38</td>
+<td align="left">waterpoint_type</td>
+<td align="right">7</td>
+<td align="left">object</td>
+</tr>
+<tr>
+<td align="right">39</td>
+<td align="left">waterpoint_type_group</td>
+<td align="right">6</td>
+<td align="left">object</td>
+</tr>
+</tbody>
+</table>
+<p>Thus <code>recorded_by</code> is constant and can be discarded:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+test<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+</code></pre></div><p>The column <code>id</code> has as many distinct values as there are rows, and the name suggest it is only an identifier for the observation. However, a check for the relevance in the model should be attempted.</p>
+<h2 id="missing-values">Missing values</h2>
+<p>Which columns have missing values?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">missing <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#34;column&#34;</span>: train<span style="color:#f92672">.</span>columns,
+    <span style="color:#e6db74">&#34;number of missing - Train&#34;</span>: [sum(train[i]<span style="color:#f92672">.</span>isna()) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> train<span style="color:#f92672">.</span>columns],
+    <span style="color:#e6db74">&#34;number of missing - Test&#34;</span>: [sum(test[i]<span style="color:#f92672">.</span>isna()) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> test<span style="color:#f92672">.</span>columns]
+})
+<span style="color:#66d9ef">print</span>(missing<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">column</th>
+<th align="right">number of missing - Train</th>
+<th align="right">number of missing - Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">id</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">amount_tsh</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">date_recorded</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">funder</td>
+<td align="right">3635</td>
+<td align="right">869</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">gps_height</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">installer</td>
+<td align="right">3655</td>
+<td align="right">877</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">longitude</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">latitude</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">wpt_name</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">num_private</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="left">basin</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="left">subvillage</td>
+<td align="right">371</td>
+<td align="right">99</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="left">region</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="left">region_code</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="left">district_code</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="left">lga</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="left">ward</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="left">population</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="left">public_meeting</td>
+<td align="right">3334</td>
+<td align="right">821</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="left">scheme_management</td>
+<td align="right">3877</td>
+<td align="right">969</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td align="left">scheme_name</td>
+<td align="right">28166</td>
+<td align="right">7092</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td align="left">permit</td>
+<td align="right">3056</td>
+<td align="right">737</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td align="left">construction_year</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td align="left">extraction_type</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td align="left">extraction_type_group</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td align="left">extraction_type_class</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td align="left">management</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td align="left">management_group</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td align="left">payment</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td align="left">payment_type</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td align="left">water_quality</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">31</td>
+<td align="left">quality_group</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="left">quantity</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td align="left">quantity_group</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">34</td>
+<td align="left">source</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">35</td>
+<td align="left">source_type</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">36</td>
+<td align="left">source_class</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">37</td>
+<td align="left">waterpoint_type</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">38</td>
+<td align="left">waterpoint_type_group</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>In order to build a baseline model, only the <strong>numerical</strong> variables without missing values will be considered.</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/python/" rel="tag">Python</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/classification/" rel="tag">Classification</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/data-exploration/" rel="tag">Data Exploration</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/pandas/" rel="tag">pandas</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/matplotlib/" rel="tag">matplotlib</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Marco Carnini avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Marco Carnini</span>
+	</div>
+	<div class="authorbox__description">
+		Data Scientist in a Belgian Fintech company. Passionate about Machine Learning and Data Science, I started using R. But then I grew up, and I started using only Python.
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/setting-up-hugo/" rel="prev">
+			<span class="post-nav__caption">«&thinsp;Previous</span>
+			<p class="post-nav__post-title">Setting up this site</p>
+		</a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/2020-10-04-first-model/" rel="next">
+			<span class="post-nav__caption">Next&thinsp;»</span>
+			<p class="post-nav__post-title">Pump It Up – Baseline model</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		
+<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Marco Carnini.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?thirdparty=1&always=1&blocking=1"></script>
+
+	</div>
+<script async defer src="/js/menu.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

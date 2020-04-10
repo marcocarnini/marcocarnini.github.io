@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on The Blog of a Curious Data Scientist</title>
+    <title>Categories on The Blog of a Passionate Data Scientist</title>
     <link>http://marcocarnini.github.io/categories/</link>
-    <description>Recent content in Categories on The Blog of a Curious Data Scientist</description>
+    <description>Recent content in Categories on The Blog of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2020 20:16:20 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 20:44:17 +0200</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Competitions</title>
+      <link>http://marcocarnini.github.io/categories/competitions/</link>
+      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/categories/competitions/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Site</title>

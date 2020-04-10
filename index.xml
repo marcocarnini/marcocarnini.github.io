@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>The Blog of a Curious Data Scientist</title>
+    <title>The Blog of a Passionate Data Scientist</title>
     <link>http://marcocarnini.github.io/</link>
-    <description>Recent content on The Blog of a Curious Data Scientist</description>
+    <description>Recent content on The Blog of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Apr 2020 20:16:20 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Setting up the site</title>
+      <title>Pump It Up – Baseline model</title>
+      <link>http://marcocarnini.github.io/posts/2020-10-04-first-model/</link>
+      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/posts/2020-10-04-first-model/</guid>
+      <description>Baseline model for the Pump-it-Up competition.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>http://marcocarnini.github.io/about/</link>
+      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://marcocarnini.github.io/about/</guid>
+      <description>About me I am a Lead Data Scientist at Features Analytics, a Belgian Fintech company. I build Machine Learning models and look for anomalies in large datasets.
+Working Experience   February 2017 – Present: Features Analytics, working with R and Python for rapid prototyping, Machine Learning and Data Analysis.
+  November 2011 – January 2017: Johannes Gutentberg Universität, working with R, Python and C++ in Bioinformatics. Also, working as a Tutor, Teaching Assistant and Lecturer.</description>
+    </item>
+    
+    <item>
+      <title>How to...</title>
+      <link>http://marcocarnini.github.io/howto/</link>
+      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://marcocarnini.github.io/howto/</guid>
+      <description>Print tables from Jupyter This is method to print tables that are properly rendered from Jupyter to Markdown. As a first step, I install the Python package tabulate:
+pip3 install tabulate From a jupyter cell, if I want to print the data frame df, I use the command line:
+print(df.head().to_markdown()) The result will be:
+ | ... | ... This will not be rendered as table, but as code (like LaTeX verbatim) due the four trailing spaces.</description>
+    </item>
+    
+    <item>
+      <title>Pump It Up – Data Exploration</title>
+      <link>http://marcocarnini.github.io/posts/2020-09-04-data-preparation/</link>
+      <pubDate>Wed, 08 Apr 2020 00:13:28 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/posts/2020-09-04-data-preparation/</guid>
+      <description>Basic Data Exploration for the Pump-it-Up competition.</description>
+    </item>
+    
+    <item>
+      <title>Setting up this site</title>
       <link>http://marcocarnini.github.io/posts/setting-up-hugo/</link>
       <pubDate>Sat, 04 Apr 2020 20:16:20 +0200</pubDate>
       

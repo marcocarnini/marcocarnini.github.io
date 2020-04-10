@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mainroad on The Blog of a Passionate Data Scientist</title>
+    <link>http://marcocarnini.github.io/tags/mainroad/</link>
+    <description>Recent content in Mainroad on The Blog of a Passionate Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Apr 2020 22:16:20 +0200</lastBuildDate>
+    
+	<atom:link href="http://marcocarnini.github.io/tags/mainroad/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Configuring the site</title>
+      <link>http://marcocarnini.github.io/posts/configuring-the-site/</link>
+      <pubDate>Mon, 06 Apr 2020 22:16:20 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/posts/configuring-the-site/</guid>
+      <description>How to configure the site: cookie banner and Google Analytics.</description>
+    </item>
+    
+  </channel>
+</rss>
