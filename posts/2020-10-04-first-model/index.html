@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Pump It Up – Baseline model - The Blog of a Passionate Data Scientist</title>
+	<title>Pump It Up – Baseline model - The Personal Notes of a Passionate Data Scientist</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="Baseline model for the Pump-it-Up competition.">
 	<meta property="og:title" content="Pump It Up – Baseline model" />
@@ -31,8 +31,8 @@
 		<header class="header">
 	<div class="container">
 		<div class="logo">
-			<a class="logo__link" href="/" title="The Blog of a Passionate Data Scientist" rel="home">
-				<div class="logo__title">The Blog of a Passionate Data Scientist</div>
+			<a class="logo__link" href="/" title="The Personal Notes of a Passionate Data Scientist" rel="home">
+				<div class="logo__title">The Personal Notes of a Passionate Data Scientist</div>
 				<div class="logo__tagline">Books, articles and experiments about Machine Learning</div>
 			</a>
 		</div>
@@ -92,7 +92,8 @@
 	</div>
 </div>
 <div class="content post__content clearfix">
-			<h2 id="importing-the-data">Importing the data</h2>
+			<p>Photo by <a href="https://unsplash.com/@thenata?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Anastasia Taioglou</a> on <a href="https://unsplash.com/s/photos/water?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<h2 id="importing-the-data">Importing the data</h2>
 <p>As a first step, I import the data and get rid of the column <code>record_by</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
 
@@ -212,13 +213,13 @@ dt_scores <span style="color:#f92672">=</span> cross_val_score(model, X, Y, cv<s
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 <span style="color:#f92672">%</span>matplotlib inline
 <span style="color:#f92672">from</span> sklearn.tree <span style="color:#f92672">import</span> plot_tree
+<span style="color:#f92672">from</span> sklearn.tree <span style="color:#f92672">import</span> export_graphviz
 
 
 model <span style="color:#f92672">=</span> DecisionTreeClassifier(max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)<span style="color:#f92672">.</span>fit(X, Y)
-plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">4</span>))
-plot_tree(model, filled<span style="color:#f92672">=</span>False, feature_names<span style="color:#f92672">=</span>X<span style="color:#f92672">.</span>columns)
-plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-dt0.pdf&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
-plt<span style="color:#f92672">.</span>show()
+dotfile <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;tree0.dot&#34;</span>, <span style="color:#e6db74">&#39;w&#39;</span>)
+export_graphviz(model, out_file<span style="color:#f92672">=</span>dotfile, feature_names<span style="color:#f92672">=</span>X<span style="color:#f92672">.</span>columns)
+dotfile<span style="color:#f92672">.</span>close()
 </code></pre></div><p><img src="/img/piu-tree0.png" alt="First Decision Tree"></p>
 <p>This provides some understanding of the features: <code>construction_year</code>, <code>longitude</code> and <code>amount_tsh</code> are the only relevant features for this tree.</p>
 <h2 id="train-a-random-forest">Train a Random Forest</h2>
@@ -420,8 +421,9 @@ plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Ac
 plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-performance_model0.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
 plt<span style="color:#f92672">.</span>show()
 </code></pre></div><p><img src="/img/piu-performance_model0.png" alt="The performance of the first model"></p>
-<p>As a consequence, for the first few iterations of Feature Engineering, I would consider Random Forests as basic classifiers.</p>
-
+<p>As a consequence, for the first few iterations of Feature Engineering, I would consider Random Forests as basic classifier. I save the results for future reference:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">performances<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;model0.csv&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -478,6 +480,12 @@ plt<span style="color:#f92672">.</span>show()
 		<a class="post-nav__link" href="/posts/2020-09-04-data-preparation/" rel="prev">
 			<span class="post-nav__caption">«&thinsp;Previous</span>
 			<p class="post-nav__post-title">Pump It Up – Data Exploration</p>
+		</a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/2020-13-04-imputing-coordinates/" rel="next">
+			<span class="post-nav__caption">Next&thinsp;»</span>
+			<p class="post-nav__post-title">Pump It Up – Data imputation</p>
 		</a>
 	</div>
 </nav>

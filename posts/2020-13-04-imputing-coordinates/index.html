@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Pump It Up – Data imputation - The Personal Notes of a Passionate Data Scientist</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Imputing latitude and longitude for the Pump-it-Up competition.">
+	<meta property="og:title" content="Pump It Up – Data imputation" />
+<meta property="og:description" content="Imputing latitude and longitude for the Pump-it-Up competition." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://marcocarnini.github.io/posts/2020-13-04-imputing-coordinates/" />
+<meta property="article:published_time" content="2020-04-13T22:32:15+02:00" />
+<meta property="article:modified_time" content="2020-04-13T22:32:15+02:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Pump It Up – Data imputation"/>
+<meta name="twitter:description" content="Imputing latitude and longitude for the Pump-it-Up competition."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="The Personal Notes of a Passionate Data Scientist" rel="home">
+				<div class="logo__title">The Personal Notes of a Passionate Data Scientist</div>
+				<div class="logo__tagline">Books, articles and experiments about Machine Learning</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About Me</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/howto/">
+				
+				<span class="menu__text">How to...</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Pump It Up – Data imputation</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-13T22:32:15&#43;02:00">2020-04-13</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/competitions/" rel="category">Competitions</a>
+	</span>
+</div></div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/water.jpg" alt="Pump It Up – Data imputation">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#importing-the-data">Importing the data</a></li>
+    <li><a href="#inspecting-latitude-and-longitude">Inspecting latitude and longitude</a></li>
+    <li><a href="#imputing-the-missing-values">Imputing the missing values</a></li>
+    <li><a href="#retraining-the-model">Retraining the model</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>Photo by <a href="https://unsplash.com/@thenata?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Anastasia Taioglou</a> on <a href="https://unsplash.com/s/photos/water?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<h2 id="importing-the-data">Importing the data</h2>
+<p>As a first step, I import the data and get rid of the column <code>record_by</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+
+
+train <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/4910797b-ee55-40a7-8668-10efd5c1b960.csv&#34;</span>)
+test <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv&#34;</span>)
+labels <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/0bf8bc6e-30d0-4c50-956a-603fc693d966.csv&#34;</span>)
+
+train<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+test<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+</code></pre></div><p>Then I select the numerical columns without missing values:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])
+<span style="color:#66d9ef">print</span>(X<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">id</th>
+<th align="right">amount_tsh</th>
+<th align="right">gps_height</th>
+<th align="right">longitude</th>
+<th align="right">latitude</th>
+<th align="right">num_private</th>
+<th align="right">region_code</th>
+<th align="right">district_code</th>
+<th align="right">population</th>
+<th align="right">construction_year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">69572</td>
+<td align="right">6000</td>
+<td align="right">1390</td>
+<td align="right">34.9381</td>
+<td align="right">-9.85632</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">5</td>
+<td align="right">109</td>
+<td align="right">1999</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">8776</td>
+<td align="right">0</td>
+<td align="right">1399</td>
+<td align="right">34.6988</td>
+<td align="right">-2.14747</td>
+<td align="right">0</td>
+<td align="right">20</td>
+<td align="right">2</td>
+<td align="right">280</td>
+<td align="right">2010</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">34310</td>
+<td align="right">25</td>
+<td align="right">686</td>
+<td align="right">37.4607</td>
+<td align="right">-3.82133</td>
+<td align="right">0</td>
+<td align="right">21</td>
+<td align="right">4</td>
+<td align="right">250</td>
+<td align="right">2009</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">67743</td>
+<td align="right">0</td>
+<td align="right">263</td>
+<td align="right">38.4862</td>
+<td align="right">-11.1553</td>
+<td align="right">0</td>
+<td align="right">90</td>
+<td align="right">63</td>
+<td align="right">58</td>
+<td align="right">1986</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">19728</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">31.1308</td>
+<td align="right">-1.82536</td>
+<td align="right">0</td>
+<td align="right">18</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Then, I import the labels:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Y <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>status_group<span style="color:#f92672">.</span>ravel()
+</code></pre></div><h2 id="inspecting-latitude-and-longitude">Inspecting latitude and longitude</h2>
+<p>I explore as a first feature the <code>latitude</code> and <code>longitude</code>, starting with a <code>distplot</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">%</span>matplotlib inline
+
+
+f, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>), sharex<span style="color:#f92672">=</span>False)
+sns<span style="color:#f92672">.</span>distplot(train[<span style="color:#e6db74">&#34;longitude&#34;</span>], ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Longitude&#34;</span>)
+sns<span style="color:#f92672">.</span>distplot(train[<span style="color:#e6db74">&#34;latitude&#34;</span>], ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Latitude&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-latitude-hist.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-latitude-hist.png" alt="Latitude histogram"></p>
+<p>There are anomalous values for the longitude: quoting <a href="https://www.worldatlas.com/af/tz/where-is-tanzania.html">world atlas</a>, the extreme values for the coordinates are the following:</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Extreme</strong></th>
+<th align="center"><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Minimum Longitude</td>
+<td align="center">29.330</td>
+</tr>
+<tr>
+<td align="left">Maximum Longitude</td>
+<td align="center">40.450</td>
+</tr>
+<tr>
+<td align="left">Mininum Latitude</td>
+<td align="center">-11.750</td>
+</tr>
+<tr>
+<td align="left">Maximum Latitude</td>
+<td align="center">-0.990</td>
+</tr>
+</tbody>
+</table>
+<p>The anomalies are more visible in a scatterplot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+sns<span style="color:#f92672">.</span>scatterplot(train[<span style="color:#e6db74">&#34;longitude&#34;</span>], train[<span style="color:#e6db74">&#34;latitude&#34;</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Coordinates of the wells&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Longitude&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Latitude&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-wells-coordinates.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+</code></pre></div><p><img src="/img/piu-wells-coordinates.png" alt="Original well coordinates"></p>
+<p>The points in questions are the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(train<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, [
+      <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>]]<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">latitude</th>
+<th align="right">longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">21</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">53</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">168</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">177</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">253</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Are those values constants? I tried printing the unique values in the two arrays, getting:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+
+<span style="color:#66d9ef">print</span>(train<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, [
+      <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>]]<span style="color:#f92672">.</span>apply(np<span style="color:#f92672">.</span>unique)<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">latitude</th>
+<th align="right">longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">-2e-08</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>The values are constant for 1812 observations in the training and 457 in the testing:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(train<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>]]<span style="color:#f92672">.</span>shape)
+<span style="color:#66d9ef">print</span>(test<span style="color:#f92672">.</span>loc[test[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>]]<span style="color:#f92672">.</span>shape)
+</code></pre></div><pre><code>(1812, 2)
+(457, 2)
+</code></pre>
+<h2 id="imputing-the-missing-values">Imputing the missing values</h2>
+<p>Maybe the fact that data are missing is itself a relevant information. I create a column equl to 1 if data are missing and 0 otherwise:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>] <span style="color:#f92672">=</span> (train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>)<span style="color:#f92672">.</span>astype(int)
+test[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>] <span style="color:#f92672">=</span> (test[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>)<span style="color:#f92672">.</span>astype(int)
+</code></pre></div><p>For imputing the values, rather than considering a fixed value like the average or the median of the corresponding coordinates, I would take the average or the median over the <strong>district</strong> or <strong>region</strong> codes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(len(train[<span style="color:#e6db74">&#34;region_code&#34;</span>]<span style="color:#f92672">.</span>unique()))
+<span style="color:#66d9ef">print</span>(len(train[<span style="color:#e6db74">&#34;district_code&#34;</span>]<span style="color:#f92672">.</span>unique()))
+</code></pre></div><pre><code>27
+20
+</code></pre>
+<p>I would explore both. First I take the data excluding the missing values:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;train&#34;</span>
+test[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>
+temp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat((train[[<span style="color:#e6db74">&#34;source&#34;</span>, <span style="color:#e6db74">&#34;id&#34;</span>, <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>]],
+                  test[[<span style="color:#e6db74">&#34;source&#34;</span>, <span style="color:#e6db74">&#34;id&#34;</span>, <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>]]))
+temp<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(74250, 6)
+</code></pre>
+<p>Then, I take the average and the median for each region for both latitude and longitude:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">region_imputation <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [
+    <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>]]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;region_code&#34;</span>)<span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+region_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>, <span style="color:#e6db74">&#34;r-latitude-median&#34;</span>, <span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>, <span style="color:#e6db74">&#34;r-longitude-median&#34;</span>]
+<span style="color:#66d9ef">print</span>(region_imputation<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right">region_code</th>
+<th align="right">r-latitude-mean</th>
+<th align="right">r-latitude-median</th>
+<th align="right">r-longitude-mean</th>
+<th align="right">r-longitude-median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">-5.94045</td>
+<td align="right">-6.11097</td>
+<td align="right">36.0419</td>
+<td align="right">35.9726</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">-3.23051</td>
+<td align="right">-3.3302</td>
+<td align="right">36.65</td>
+<td align="right">36.739</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">-3.52329</td>
+<td align="right">-3.31284</td>
+<td align="right">37.5051</td>
+<td align="right">37.522</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">-5.05969</td>
+<td align="right">-5.01764</td>
+<td align="right">38.5186</td>
+<td align="right">38.4969</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">-7.39709</td>
+<td align="right">-7.24398</td>
+<td align="right">37.0476</td>
+<td align="right">36.9971</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">-6.67602</td>
+<td align="right">-6.63215</td>
+<td align="right">38.7595</td>
+<td align="right">38.854</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right">-6.90839</td>
+<td align="right">-6.90944</td>
+<td align="right">39.2129</td>
+<td align="right">39.1743</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">-10.3106</td>
+<td align="right">-10.2774</td>
+<td align="right">38.5744</td>
+<td align="right">38.6412</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="right">-10.6326</td>
+<td align="right">-10.734</td>
+<td align="right">39.7648</td>
+<td align="right">39.6621</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right">-10.777</td>
+<td align="right">-10.7531</td>
+<td align="right">35.7253</td>
+<td align="right">35.5963</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="right">-8.90231</td>
+<td align="right">-9.08244</td>
+<td align="right">34.8838</td>
+<td align="right">34.7743</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="right">-9.09694</td>
+<td align="right">-9.15032</td>
+<td align="right">33.5335</td>
+<td align="right">33.6464</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="right">-4.89867</td>
+<td align="right">-4.77047</td>
+<td align="right">34.7393</td>
+<td align="right">34.7903</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="right">-4.71877</td>
+<td align="right">-4.69305</td>
+<td align="right">32.8732</td>
+<td align="right">32.886</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">-7.35728</td>
+<td align="right">-7.58938</td>
+<td align="right">31.2909</td>
+<td align="right">31.2963</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">-4.2965</td>
+<td align="right">-4.49278</td>
+<td align="right">30.2178</td>
+<td align="right">30.144</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="right">-3.31846</td>
+<td align="right">-3.45554</td>
+<td align="right">31.5879</td>
+<td align="right">33.3556</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="right">-1.97856</td>
+<td align="right">-1.74113</td>
+<td align="right">31.2515</td>
+<td align="right">31.3561</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="right">-2.46649</td>
+<td align="right">-2.60337</td>
+<td align="right">31.1723</td>
+<td align="right">33.068</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td align="right">-1.7372</td>
+<td align="right">-1.76965</td>
+<td align="right">34.1565</td>
+<td align="right">34.1563</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td align="right">-4.29492</td>
+<td align="right">-4.22453</td>
+<td align="right">35.9284</td>
+<td align="right">35.6477</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td align="right">-3.37974</td>
+<td align="right">-3.35489</td>
+<td align="right">35.6616</td>
+<td align="right">35.6719</td>
+</tr>
+<tr>
+<td align="right">40</td>
+<td align="right">-7.00127</td>
+<td align="right">-7.00127</td>
+<td align="right">39.218</td>
+<td align="right">39.218</td>
+</tr>
+<tr>
+<td align="right">60</td>
+<td align="right">-7.52979</td>
+<td align="right">-7.62444</td>
+<td align="right">39.0774</td>
+<td align="right">39.0726</td>
+</tr>
+<tr>
+<td align="right">80</td>
+<td align="right">-9.63466</td>
+<td align="right">-9.90451</td>
+<td align="right">39.0842</td>
+<td align="right">39.151</td>
+</tr>
+<tr>
+<td align="right">90</td>
+<td align="right">-10.8087</td>
+<td align="right">-10.8349</td>
+<td align="right">38.9473</td>
+<td align="right">39.0144</td>
+</tr>
+<tr>
+<td align="right">99</td>
+<td align="right">-10.4572</td>
+<td align="right">-10.4534</td>
+<td align="right">40.0015</td>
+<td align="right">39.9942</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">district_imputation <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [
+    <span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>]]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;district_code&#34;</span>)<span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+district_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>, <span style="color:#e6db74">&#34;d-latitude-median&#34;</span>, <span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>, <span style="color:#e6db74">&#34;d-longitude-median&#34;</span>]
+<span style="color:#66d9ef">print</span>(district_imputation<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right">district_code</th>
+<th align="right">d-latitude-mean</th>
+<th align="right">d-latitude-median</th>
+<th align="right">d-longitude-mean</th>
+<th align="right">d-longitude-median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">-6.46022</td>
+<td align="right">-6.44348</td>
+<td align="right">36.6596</td>
+<td align="right">36.6807</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">-5.25731</td>
+<td align="right">-4.76681</td>
+<td align="right">34.5805</td>
+<td align="right">35.7405</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">-5.09631</td>
+<td align="right">-4.54135</td>
+<td align="right">34.5887</td>
+<td align="right">34.8105</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">-6.28091</td>
+<td align="right">-5.64655</td>
+<td align="right">34.5791</td>
+<td align="right">34.19</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">-6.69513</td>
+<td align="right">-8.64775</td>
+<td align="right">35.0117</td>
+<td align="right">34.7132</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">-6.34067</td>
+<td align="right">-5.74901</td>
+<td align="right">35.3545</td>
+<td align="right">35.7805</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">-5.60017</td>
+<td align="right">-5.95106</td>
+<td align="right">34.2475</td>
+<td align="right">34.2559</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right">-4.67343</td>
+<td align="right">-3.35438</td>
+<td align="right">35.3266</td>
+<td align="right">36.1072</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">-3.58022</td>
+<td align="right">-3.55684</td>
+<td align="right">34.5564</td>
+<td align="right">33.5713</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="right">-8.77407</td>
+<td align="right">-8.58916</td>
+<td align="right">39.177</td>
+<td align="right">39.1799</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td align="right">-10.0871</td>
+<td align="right">-10.1529</td>
+<td align="right">39.4903</td>
+<td align="right">39.4584</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td align="right">-2.84542</td>
+<td align="right">-2.71887</td>
+<td align="right">32.2517</td>
+<td align="right">30.7106</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td align="right">-10.2786</td>
+<td align="right">-10.732</td>
+<td align="right">39.0299</td>
+<td align="right">39.0452</td>
+</tr>
+<tr>
+<td align="right">43</td>
+<td align="right">-7.96765</td>
+<td align="right">-7.19321</td>
+<td align="right">38.8276</td>
+<td align="right">39.1235</td>
+</tr>
+<tr>
+<td align="right">53</td>
+<td align="right">-8.71204</td>
+<td align="right">-7.98776</td>
+<td align="right">38.9202</td>
+<td align="right">38.959</td>
+</tr>
+<tr>
+<td align="right">60</td>
+<td align="right">-7.92537</td>
+<td align="right">-7.91199</td>
+<td align="right">39.6784</td>
+<td align="right">39.6666</td>
+</tr>
+<tr>
+<td align="right">62</td>
+<td align="right">-10.0022</td>
+<td align="right">-10.0258</td>
+<td align="right">39.6071</td>
+<td align="right">39.5962</td>
+</tr>
+<tr>
+<td align="right">63</td>
+<td align="right">-10.4096</td>
+<td align="right">-10.9262</td>
+<td align="right">38.7101</td>
+<td align="right">38.5096</td>
+</tr>
+<tr>
+<td align="right">67</td>
+<td align="right">-7.97167</td>
+<td align="right">-7.97168</td>
+<td align="right">39.74</td>
+<td align="right">39.7405</td>
+</tr>
+<tr>
+<td align="right">80</td>
+<td align="right">-3.9501</td>
+<td align="right">-3.95226</td>
+<td align="right">34.0411</td>
+<td align="right">34.0197</td>
+</tr>
+</tbody>
+</table>
+<p>Then I make a left join with the data frame containing only missing coordinate (<code>missing</code>) using the region or the district code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">missing <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, :] \
+    <span style="color:#f92672">.</span>merge(region_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;region_code&#34;</span>) \
+    <span style="color:#f92672">.</span>merge(district_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;district_code&#34;</span>)
+missing<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>,
+              <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(missing<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">source</th>
+<th align="right">id</th>
+<th align="right">r-latitude-mean</th>
+<th align="right">r-latitude-median</th>
+<th align="right">r-longitude-mean</th>
+<th align="right">r-longitude-median</th>
+<th align="right">d-latitude-mean</th>
+<th align="right">d-latitude-median</th>
+<th align="right">d-longitude-mean</th>
+<th align="right">d-longitude-median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">train</td>
+<td align="right">6091</td>
+<td align="right">-3.31846</td>
+<td align="right">-3.45554</td>
+<td align="right">31.5879</td>
+<td align="right">33.3556</td>
+<td align="right">-5.25731</td>
+<td align="right">-4.76681</td>
+<td align="right">34.5805</td>
+<td align="right">35.7405</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">train</td>
+<td align="right">32376</td>
+<td align="right">-2.46649</td>
+<td align="right">-2.60337</td>
+<td align="right">31.1723</td>
+<td align="right">33.068</td>
+<td align="right">-5.60017</td>
+<td align="right">-5.95106</td>
+<td align="right">34.2475</td>
+<td align="right">34.2559</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">train</td>
+<td align="right">72678</td>
+<td align="right">-3.31846</td>
+<td align="right">-3.45554</td>
+<td align="right">31.5879</td>
+<td align="right">33.3556</td>
+<td align="right">-5.25731</td>
+<td align="right">-4.76681</td>
+<td align="right">34.5805</td>
+<td align="right">35.7405</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">train</td>
+<td align="right">56725</td>
+<td align="right">-3.31846</td>
+<td align="right">-3.45554</td>
+<td align="right">31.5879</td>
+<td align="right">33.3556</td>
+<td align="right">-5.25731</td>
+<td align="right">-4.76681</td>
+<td align="right">34.5805</td>
+<td align="right">35.7405</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">train</td>
+<td align="right">13042</td>
+<td align="right">-2.46649</td>
+<td align="right">-2.60337</td>
+<td align="right">31.1723</td>
+<td align="right">33.068</td>
+<td align="right">-5.09631</td>
+<td align="right">-4.54135</td>
+<td align="right">34.5887</td>
+<td align="right">34.8105</td>
+</tr>
+</tbody>
+</table>
+<p>For the non-missing data, I simply take a copy of latitude and longitude:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nonmissing <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, :]<span style="color:#f92672">.</span>copy()
+nonmissing[<span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;r-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;r-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;d-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+nonmissing[<span style="color:#e6db74">&#34;d-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+nonmissing<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>,
+                 <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(nonmissing<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">source</th>
+<th align="right">id</th>
+<th align="right">r-latitude-mean</th>
+<th align="right">r-latitude-median</th>
+<th align="right">r-longitude-mean</th>
+<th align="right">r-longitude-median</th>
+<th align="right">d-latitude-mean</th>
+<th align="right">d-latitude-median</th>
+<th align="right">d-longitude-mean</th>
+<th align="right">d-longitude-median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">train</td>
+<td align="right">69572</td>
+<td align="right">-9.85632</td>
+<td align="right">-9.85632</td>
+<td align="right">34.9381</td>
+<td align="right">34.9381</td>
+<td align="right">-9.85632</td>
+<td align="right">-9.85632</td>
+<td align="right">34.9381</td>
+<td align="right">34.9381</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">train</td>
+<td align="right">8776</td>
+<td align="right">-2.14747</td>
+<td align="right">-2.14747</td>
+<td align="right">34.6988</td>
+<td align="right">34.6988</td>
+<td align="right">-2.14747</td>
+<td align="right">-2.14747</td>
+<td align="right">34.6988</td>
+<td align="right">34.6988</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">train</td>
+<td align="right">34310</td>
+<td align="right">-3.82133</td>
+<td align="right">-3.82133</td>
+<td align="right">37.4607</td>
+<td align="right">37.4607</td>
+<td align="right">-3.82133</td>
+<td align="right">-3.82133</td>
+<td align="right">37.4607</td>
+<td align="right">37.4607</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">train</td>
+<td align="right">67743</td>
+<td align="right">-11.1553</td>
+<td align="right">-11.1553</td>
+<td align="right">38.4862</td>
+<td align="right">38.4862</td>
+<td align="right">-11.1553</td>
+<td align="right">-11.1553</td>
+<td align="right">38.4862</td>
+<td align="right">38.4862</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">train</td>
+<td align="right">19728</td>
+<td align="right">-1.82536</td>
+<td align="right">-1.82536</td>
+<td align="right">31.1308</td>
+<td align="right">31.1308</td>
+<td align="right">-1.82536</td>
+<td align="right">-1.82536</td>
+<td align="right">31.1308</td>
+<td align="right">31.1308</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, I merge the missing with the non-missing:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">imputed <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat((missing, nonmissing))
+imputed<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(74250, 10)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>]
+                           <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;train&#34;</span>, ]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+test_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>]
+                          <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;test&#34;</span>, ]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+train <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>merge(train_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+test <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>merge(train_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+</code></pre></div><p>Visually, the new cordinates (just for the mean imputation):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train<span style="color:#f92672">.</span>sort_values(by<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>], ascending<span style="color:#f92672">=</span>False)
+
+f, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>), sharex<span style="color:#f92672">=</span>False)
+sns<span style="color:#f92672">.</span>scatterplot(train[<span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>], train[<span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>],
+                ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>], hue<span style="color:#f92672">=</span>train[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>], legend<span style="color:#f92672">=</span>False)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Imputed with region&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Longitude&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Latitude&#34;</span>)
+
+sns<span style="color:#f92672">.</span>scatterplot(train[<span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>], train[<span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>],
+                ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], hue<span style="color:#f92672">=</span>train[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>], legend<span style="color:#f92672">=</span>False)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Imputed with district&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Longitude&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Latitude&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-wells-coordinates-mean-imputed.png&#34;</span>,
+            dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+</code></pre></div><p><img src="/img/piu-wells-coordinates-mean-imputed.png" alt="Mean imputation for coordinates"></p>
+<p>With the imputation, many wells share the same coordinates (that is, the missing wells belongs to few distinct regions or districts):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train[<span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>][train[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>unique()
+</code></pre></div><pre><code>array([31.58793761, 31.17232044, 34.88375491])
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train[<span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>][train[<span style="color:#e6db74">&#34;coordinates_missing&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>unique()
+</code></pre></div><pre><code>array([34.5805335 , 34.24754969, 34.58873195, 35.01166683])
+</code></pre>
+<p>The improvement over the raw data may be not significant.</p>
+<h2 id="retraining-the-model">Retraining the model</h2>
+<p>Selecting again only the numerical variables without missing data:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])
+Y <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>status_group<span style="color:#f92672">.</span>ravel()
+</code></pre></div><p>I train a Random Forest with default hyperparameters:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> cross_val_score
+
+
+model <span style="color:#f92672">=</span> RandomForestClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)
+rf_scores <span style="color:#f92672">=</span> cross_val_score(model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(rf_scores), <span style="color:#e6db74">&#34;+/-&#34;</span>, np<span style="color:#f92672">.</span>std(rf_scores))
+</code></pre></div><pre><code>0.7221548821548822 +/- 0.0052541437547830505
+</code></pre>
+<p>The scores represent only a marginal improvement on the previous result. Reading the previous results and comparing with the current model make obvious that the improvement is marginal:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model0 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;model0.csv&#34;</span>)
+model0 <span style="color:#f92672">=</span> model0<span style="color:#f92672">.</span>loc[model0[<span style="color:#e6db74">&#34;Model&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Random Forest&#34;</span>, :]
+model0[<span style="color:#e6db74">&#34;Model&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Model 0&#34;</span>
+
+model1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#34;Model&#34;</span>: [<span style="color:#e6db74">&#34;Model 1&#34;</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">10</span>,
+    <span style="color:#e6db74">&#34;Scores&#34;</span>: rf_scores
+})
+
+performances <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat((model0, model1))
+<span style="color:#66d9ef">print</span>(performances<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">Model</th>
+<th align="right">Scores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">10</td>
+<td align="left">Model 0</td>
+<td align="right">0.721549</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="left">Model 0</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="left">Model 0</td>
+<td align="right">0.71229</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="left">Model 0</td>
+<td align="right">0.715488</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="left">Model 0</td>
+<td align="right">0.72862</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="left">Model 0</td>
+<td align="right">0.712963</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="left">Model 0</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="left">Model 0</td>
+<td align="right">0.711279</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="left">Model 0</td>
+<td align="right">0.704714</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="left">Model 0</td>
+<td align="right">0.720539</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td align="left">Model 1</td>
+<td align="right">0.721549</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">Model 1</td>
+<td align="right">0.727778</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">Model 1</td>
+<td align="right">0.720539</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">Model 1</td>
+<td align="right">0.722896</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">Model 1</td>
+<td align="right">0.731313</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">Model 1</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">Model 1</td>
+<td align="right">0.726936</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">Model 1</td>
+<td align="right">0.715488</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">Model 1</td>
+<td align="right">0.712795</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">Model 1</td>
+<td align="right">0.721212</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">12</span>))
+sns<span style="color:#f92672">.</span>boxplot(x<span style="color:#f92672">=</span>performances[<span style="color:#e6db74">&#34;Scores&#34;</span>], y<span style="color:#f92672">=</span>performances[<span style="color:#e6db74">&#34;Model&#34;</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;&#34;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Accuracy for Random Forest&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-performance_model1.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-performance_model1.png" alt="Model 1: Imputing coordinates"></p>
+<p>I save the performance in a file to compare the next models with the current one:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">performances<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;model0-1.csv&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/python/" rel="tag">Python</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/classification/" rel="tag">Classification</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/model-training/" rel="tag">Model Training</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/imputation/" rel="tag">Imputation</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/pandas/" rel="tag">pandas</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/seaborn/" rel="tag">seaborn</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/sklearn/" rel="tag">sklearn</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/random-forest/" rel="tag">Random Forest</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Marco Carnini avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Marco Carnini</span>
+	</div>
+	<div class="authorbox__description">
+		Data Scientist in a Belgian Fintech company. Passionate about Machine Learning and Data Science, I started using R. But then I grew up, and I started using only Python.
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/2020-10-04-first-model/" rel="prev">
+			<span class="post-nav__caption">«&thinsp;Previous</span>
+			<p class="post-nav__post-title">Pump It Up – Baseline model</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		
+<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Marco Carnini.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?thirdparty=1&always=1&blocking=1"></script>
+
+	</div>
+<script async defer src="/js/menu.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

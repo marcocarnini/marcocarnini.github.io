@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Imputation on The Personal Notes of a Passionate Data Scientist</title>
+    <link>http://marcocarnini.github.io/tags/imputation/</link>
+    <description>Recent content in Imputation on The Personal Notes of a Passionate Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Apr 2020 22:32:15 +0200</lastBuildDate>
+    
+	<atom:link href="http://marcocarnini.github.io/tags/imputation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pump It Up – Data imputation</title>
+      <link>http://marcocarnini.github.io/posts/2020-13-04-imputing-coordinates/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/posts/2020-13-04-imputing-coordinates/</guid>
+      <description>Imputing latitude and longitude.</description>
+    </item>
+    
+  </channel>
+</rss>

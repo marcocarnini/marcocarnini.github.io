@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on The Blog of a Passionate Data Scientist</title>
+    <title>Tags on The Personal Notes of a Passionate Data Scientist</title>
     <link>http://marcocarnini.github.io/tags/</link>
-    <description>Recent content in Tags on The Blog of a Passionate Data Scientist</description>
+    <description>Recent content in Tags on The Personal Notes of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Apr 2020 20:44:17 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2020 22:32:15 +0200</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,81 @@
     <item>
       <title>Classification</title>
       <link>http://marcocarnini.github.io/tags/classification/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
       
       <guid>http://marcocarnini.github.io/tags/classification/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Imputation</title>
+      <link>http://marcocarnini.github.io/tags/imputation/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/imputation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Model Training</title>
+      <link>http://marcocarnini.github.io/tags/model-training/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/model-training/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pandas</title>
+      <link>http://marcocarnini.github.io/tags/pandas/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>http://marcocarnini.github.io/tags/python/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>http://marcocarnini.github.io/tags/r/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Random Forest</title>
+      <link>http://marcocarnini.github.io/tags/random-forest/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/random-forest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>seaborn</title>
+      <link>http://marcocarnini.github.io/tags/seaborn/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/seaborn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sklearn</title>
+      <link>http://marcocarnini.github.io/tags/sklearn/</link>
+      <pubDate>Mon, 13 Apr 2020 22:32:15 +0200</pubDate>
+      
+      <guid>http://marcocarnini.github.io/tags/sklearn/</guid>
       <description></description>
     </item>
     
@@ -26,69 +98,6 @@
       <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
       
       <guid>http://marcocarnini.github.io/tags/decision-tree/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Model Training</title>
-      <link>http://marcocarnini.github.io/tags/model-training/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/model-training/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>pandas</title>
-      <link>http://marcocarnini.github.io/tags/pandas/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/pandas/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>http://marcocarnini.github.io/tags/python/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>http://marcocarnini.github.io/tags/r/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Random Forest</title>
-      <link>http://marcocarnini.github.io/tags/random-forest/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/random-forest/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>seaborn</title>
-      <link>http://marcocarnini.github.io/tags/seaborn/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/seaborn/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sklearn</title>
-      <link>http://marcocarnini.github.io/tags/sklearn/</link>
-      <pubDate>Fri, 10 Apr 2020 20:44:17 +0200</pubDate>
-      
-      <guid>http://marcocarnini.github.io/tags/sklearn/</guid>
       <description></description>
     </item>
     
