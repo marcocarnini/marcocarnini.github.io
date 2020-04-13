@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AI on The Personal Notes of a Passionate Data Scientist</title>
-    <link>http://marcocarnini.github.io/tags/ai/</link>
+    <link>http://marcocarnini.com/tags/ai/</link>
     <description>Recent content in AI on The Personal Notes of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://marcocarnini.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://marcocarnini.com/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About Me</title>
-      <link>http://marcocarnini.github.io/about/</link>
+      <link>http://marcocarnini.com/about/</link>
       <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://marcocarnini.github.io/about/</guid>
+      <guid>http://marcocarnini.com/about/</guid>
       <description>About me I am a Lead Data Scientist at Features Analytics, a Belgian Fintech company. I build Machine Learning models and look for anomalies in large datasets.
 Working Experience   February 2017 – Present: Features Analytics, working with R and Python for rapid prototyping, Machine Learning and Data Analysis.
   November 2011 – January 2017: Johannes Gutentberg Universität, working with R, Python and C++ in Bioinformatics. Also, working as a Tutor, Teaching Assistant and Lecturer.</description>
