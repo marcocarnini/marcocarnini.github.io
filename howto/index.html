@@ -31,6 +31,17 @@ print(df.head().to_markdown()) The result will be:
 	
 	<link rel="shortcut icon" href="/favicon.ico">
 		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-163855903-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
 </head>
 <body class="body">
 	<div class="container container--outer">
@@ -85,6 +96,7 @@ print(df.head().to_markdown()) The result will be:
   <ul>
     <li><a href="#print-tables-from-jupyter">Print tables from Jupyter</a></li>
     <li><a href="#render-trees-in-png">Render trees in png</a></li>
+    <li><a href="#install-black">Install <code>black</code></a></li>
   </ul>
 </nav>
 	</div>
@@ -126,6 +138,10 @@ dotfile<span style="color:#f92672">.</span>close()
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install graphviz
 </code></pre></div><p>simply converting from <code>dot</code> to <code>png</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dot -Tpng tree0.dot &gt; tree0.png
+</code></pre></div><h2 id="install-black">Install <code>black</code></h2>
+<p><code>black</code> is a formatter for Python. I installed for Jupyter through</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">jupyter nbextension install https://github.com/drillan/jupyter-black/archive/master.zip --user
+jupyter nbextension enable jupyter-black-master/jupyter-black
 </code></pre></div>
 		</div>
 	</article>
