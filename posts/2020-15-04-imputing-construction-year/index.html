@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Pump It Up – Imputing the construction year - Personal Notes of a Passionate Data Scientist</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Imputing the construction year of the well for the Pump-it-Up competition.">
+	<meta property="og:title" content="Pump It Up – Imputing the construction year" />
+<meta property="og:description" content="Imputing the construction year of the well for the Pump-it-Up competition." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://marcocarnini.com/posts/2020-15-04-imputing-construction-year/" />
+<meta property="article:published_time" content="2020-04-15T23:08:19+02:00" />
+<meta property="article:modified_time" content="2020-04-15T23:08:19+02:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Pump It Up – Imputing the construction year"/>
+<meta name="twitter:description" content="Imputing the construction year of the well for the Pump-it-Up competition."/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-163855903-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Personal Notes of a Passionate Data Scientist" rel="home">
+				<div class="logo__title">Personal Notes of a Passionate Data Scientist</div>
+				<div class="logo__tagline">Books, articles and experiments about Machine Learning</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">About Me</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/howto/">
+				
+				<span class="menu__text">How to...</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Pump It Up – Imputing the construction year</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-04-15T23:08:19&#43;02:00">2020-04-15</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/competitions/" rel="category">Competitions</a>
+	</span>
+</div></div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/water.jpg" alt="Pump It Up – Imputing the construction year">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#refactoring">Refactoring</a></li>
+    <li><a href="#exploring-other-features">Exploring other features</a></li>
+    <li><a href="#inspecting-construction_year">Inspecting <code>construction_year</code></a>
+      <ul>
+        <li><a href="#imputing-with-a-model">Imputing with a model</a></li>
+      </ul>
+    </li>
+    <li><a href="#imputing-construction-year">Imputing <code>construction year</code></a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>Photo by <a href="https://unsplash.com/@thenata?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Anastasia Taioglou</a> on <a href="https://unsplash.com/s/photos/water?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<h2 id="refactoring">Refactoring</h2>
+<p>So far, the model was built interactively with Jupyter notebooks. Here I want to reorganize the code into functions. Thus, I will have a function for reading the data, one for cleaning and one for training the model (later, I will create a function for fine-tuning the model). In code (formatted with <code>black</code>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> cross_val_score
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_data</span>() <span style="color:#f92672">-&gt;</span> tuple:
+    <span style="color:#66d9ef">return</span> (
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/4910797b-ee55-40a7-8668-10efd5c1b960.csv&#34;</span>),
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv&#34;</span>),
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/0bf8bc6e-30d0-4c50-956a-603fc693d966.csv&#34;</span>),
+    )
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clean_data</span>(train: pd<span style="color:#f92672">.</span>DataFrame, test: pd<span style="color:#f92672">.</span>DataFrame) <span style="color:#f92672">-&gt;</span> tuple:
+    train<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+    test<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+
+    train[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;train&#34;</span>
+    test[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>
+    temp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+        (
+            train[
+                [
+                    <span style="color:#e6db74">&#34;source&#34;</span>,
+                    <span style="color:#e6db74">&#34;id&#34;</span>,
+                    <span style="color:#e6db74">&#34;latitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;longitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;region_code&#34;</span>,
+                    <span style="color:#e6db74">&#34;district_code&#34;</span>,
+                ]
+            ],
+            test[
+                [
+                    <span style="color:#e6db74">&#34;source&#34;</span>,
+                    <span style="color:#e6db74">&#34;id&#34;</span>,
+                    <span style="color:#e6db74">&#34;latitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;longitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;region_code&#34;</span>,
+                    <span style="color:#e6db74">&#34;district_code&#34;</span>,
+                ]
+            ],
+        )
+    )
+
+    region_imputation <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>]]
+        <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;region_code&#34;</span>)
+        <span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+    )
+    region_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;r-latitude-median&#34;</span>,
+        <span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;r-longitude-median&#34;</span>,
+    ]
+
+    district_imputation <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>]]
+        <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;district_code&#34;</span>)
+        <span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+    )
+    district_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;d-latitude-median&#34;</span>,
+        <span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;d-longitude-median&#34;</span>,
+    ]
+
+    missing <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, :]
+        <span style="color:#f92672">.</span>merge(region_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;region_code&#34;</span>)
+        <span style="color:#f92672">.</span>merge(district_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;district_code&#34;</span>)
+    )
+    missing<span style="color:#f92672">.</span>drop(
+        [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True
+    )
+
+    nonmissing <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, :]<span style="color:#f92672">.</span>copy()
+    nonmissing[<span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing<span style="color:#f92672">.</span>drop(
+        [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True
+    )
+
+    imputed <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat((missing, nonmissing))
+    train_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;train&#34;</span>,]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    test_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;test&#34;</span>,]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    train <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>merge(train_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+    test <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>merge(train_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+
+    <span style="color:#66d9ef">return</span> train, test
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_model</span>(train: pd<span style="color:#f92672">.</span>DataFrame, labels: pd<span style="color:#f92672">.</span>DataFrame) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>array:
+    X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])
+    Y <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>status_group<span style="color:#f92672">.</span>ravel()
+    model <span style="color:#f92672">=</span> RandomForestClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)
+    <span style="color:#66d9ef">return</span> cross_val_score(model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+
+
+train, test, labels <span style="color:#f92672">=</span> read_data()
+train, test <span style="color:#f92672">=</span> clean_data(train, test)
+rf_scores <span style="color:#f92672">=</span> train_model(train, labels)
+<span style="color:#66d9ef">print</span>(rf_scores)
+</code></pre></div><pre><code>[0.72037037 0.73299663 0.71666667 0.71919192 0.72962963 0.72104377
+ 0.72474747 0.71447811 0.71094276 0.72222222]
+</code></pre>
+<p>The average and the standard deviation for the score is the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(rf_scores), <span style="color:#e6db74">&#34;+/-&#34;</span>, np<span style="color:#f92672">.</span>std(rf_scores))
+</code></pre></div><pre><code>0.7212289562289562 +/- 0.006320848257728567
+</code></pre>
+<h2 id="exploring-other-features">Exploring other features</h2>
+<p>So far, only two features were explored and briefly analyzed: <code>latitude</code> and <code>longitude</code>. However, the following variables are being used currently (I striked those that were at least briefly visualized or that were generate by imputation):</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>amount_tsh</strong></li>
+<li><strong>gps_height</strong></li>
+<li><strong>longitude</strong></li>
+<li><strong>latitude</strong></li>
+<li><strong>num_private</strong></li>
+<li><strong>region_code</strong></li>
+<li><strong>district_code</strong></li>
+<li><strong>population</strong></li>
+<li><strong>construction_year</strong></li>
+<li><del><strong>r-latitude-mean</strong></del></li>
+<li><del><strong>r-latitude-median</strong></del></li>
+<li><del><strong>r-longitude-mean</strong></del></li>
+<li><del><strong>r-longitude-median</strong></del></li>
+<li><del><strong>d-latitude-mean</strong></del></li>
+<li><del><strong>d-latitude-median</strong></del></li>
+<li><del><strong>d-longitude-mean</strong></del></li>
+<li><del><strong>d-longitude-median</strong></del></li>
+</ul>
+<p>Then, as a next I investigate the <code>construction_year</code>.</p>
+<h2 id="inspecting-construction_year">Inspecting <code>construction_year</code></h2>
+<p>As before, I start from a histogram:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">%</span>matplotlib inline
+
+
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+sns<span style="color:#f92672">.</span>distplot(train[<span style="color:#e6db74">&#34;construction_year&#34;</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Construction year&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-construction_year_zero.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-construction_year_zero.png" alt="Histogram of wells construction years"></p>
+<p>It seems like may values for <code>construction_year</code> were not filled and were actually imputed with zero. Excluding the zeros from the visualization, I obtain the following histogram:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+sns<span style="color:#f92672">.</span>distplot(train[<span style="color:#e6db74">&#34;construction_year&#34;</span>][train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>])
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Construction year&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-construction_year.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-construction_year.png" alt="Histogram of non missing construction years"></p>
+<p>I calculate the values for median and averages of <code>construction_year</code> (and the fraction of missing values out the total number of observations):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>median(train[<span style="color:#e6db74">&#34;construction_year&#34;</span>][train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]))
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(train[<span style="color:#e6db74">&#34;construction_year&#34;</span>][train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]))
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>))
+</code></pre></div><pre><code>2000.0
+1996.8146855857951
+0.34863636363636363
+</code></pre>
+<p>I explore the correlation with other numerical variables. With a high correlation with other variables, I can build a goa good imputation building a linear model and predicting the missing variables. I calculate the correlation among all the features:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])<span style="color:#f92672">.</span>corr()<span style="color:#f92672">.</span>loc[:, <span style="color:#e6db74">&#34;construction_year&#34;</span>]<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">construction_year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="right">-0.00208209</td>
+</tr>
+<tr>
+<td align="left">amount_tsh</td>
+<td align="right">0.0679152</td>
+</tr>
+<tr>
+<td align="left">gps_height</td>
+<td align="right">0.658727</td>
+</tr>
+<tr>
+<td align="left">longitude</td>
+<td align="right">0.396732</td>
+</tr>
+<tr>
+<td align="left">latitude</td>
+<td align="right">-0.245278</td>
+</tr>
+<tr>
+<td align="left">num_private</td>
+<td align="right">0.0260556</td>
+</tr>
+<tr>
+<td align="left">region_code</td>
+<td align="right">0.0317241</td>
+</tr>
+<tr>
+<td align="left">district_code</td>
+<td align="right">0.0483152</td>
+</tr>
+<tr>
+<td align="left">population</td>
+<td align="right">0.26091</td>
+</tr>
+<tr>
+<td align="left">construction_year</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">r-latitude-mean</td>
+<td align="right">-0.212801</td>
+</tr>
+<tr>
+<td align="left">r-latitude-median</td>
+<td align="right">-0.211077</td>
+</tr>
+<tr>
+<td align="left">r-longitude-mean</td>
+<td align="right">0.489476</td>
+</tr>
+<tr>
+<td align="left">r-longitude-median</td>
+<td align="right">0.47119</td>
+</tr>
+<tr>
+<td align="left">d-latitude-mean</td>
+<td align="right">-0.180753</td>
+</tr>
+<tr>
+<td align="left">d-latitude-median</td>
+<td align="right">-0.184569</td>
+</tr>
+<tr>
+<td align="left">d-longitude-mean</td>
+<td align="right">0.45423</td>
+</tr>
+<tr>
+<td align="left">d-longitude-median</td>
+<td align="right">0.442705</td>
+</tr>
+</tbody>
+</table>
+<h3 id="imputing-with-a-model">Imputing with a model</h3>
+<p>In order to impute the missing values for <code>construction_year</code>, I build some (untuned for simplicity) models to predict <code>construction_year</code> from the available numerical columns. I tried first with a Random Forest regressor:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestRegressor
+
+
+X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])<span style="color:#f92672">.</span>loc[
+    train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>, :
+]
+Y <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>construction_year<span style="color:#f92672">.</span>ravel()
+X<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;construction_year&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+model <span style="color:#f92672">=</span> RandomForestRegressor(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)
+rf_scores <span style="color:#f92672">=</span> cross_val_score(
+    model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;neg_mean_squared_error&#34;</span>
+)
+</code></pre></div><p>The metric is the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html">negative mean squared error</a> (that is the reason for negative values):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(rf_scores)
+</code></pre></div><pre><code>[-69.1032461  -69.25243787 -67.54833352 -65.76045412 -65.98857922
+ -68.69079548 -66.85597834 -62.17621339 -63.09343673 -68.43594433]
+</code></pre>
+<p>Here there are some example predictions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>predict(X)
+</code></pre></div><pre><code>array([1999.47, 2005.41, 2008.93, ..., 1999.  , 1992.3 , 2002.  ])
+</code></pre>
+<p>The relevant metric to assess is the average quadratic difference with the known values</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>sqrt(np<span style="color:#f92672">.</span>mean((Y<span style="color:#f92672">-</span>model<span style="color:#f92672">.</span>predict(X))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>))
+</code></pre></div><pre><code>3.01306678540479
+</code></pre>
+<p>Trying instead with a linear model:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LinearRegression
+
+
+model <span style="color:#f92672">=</span> LinearRegression()
+lin_scores <span style="color:#f92672">=</span> cross_val_score(
+    model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;neg_mean_squared_error&#34;</span>
+)
+</code></pre></div><p>I got worse results:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(lin_scores)
+</code></pre></div><pre><code>[-157.93164489 -161.59832909 -154.32962147 -152.44825225 -159.00582027
+ -155.3088363  -152.00369456 -149.26156576 -149.03934272 -158.89908401]
+</code></pre>
+<p>Finally, with Xgboost:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> xgboost <span style="color:#f92672">import</span> XGBRegressor
+
+
+model <span style="color:#f92672">=</span> XGBRegressor()
+xgb_scores <span style="color:#f92672">=</span> cross_val_score(
+    model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;neg_mean_squared_error&#34;</span>
+)
+</code></pre></div><p>Still not so good results.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(xgb_scores)
+</code></pre></div><pre><code>[-89.86001896 -87.66991309 -86.2814411  -83.93712904 -86.29519166
+ -89.89196578 -83.41551574 -83.08570435 -79.96698577 -90.85749749]
+</code></pre>
+<p>I tried actually using a classifier (treating years like categorical variables):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier
+
+
+model <span style="color:#f92672">=</span> RandomForestClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)
+rf_scores <span style="color:#f92672">=</span> cross_val_score(model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, n_jobs<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>, scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;accuracy&#34;</span>)
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(rf_scores), <span style="color:#e6db74">&#34;+/-&#34;</span>, np<span style="color:#f92672">.</span>std(rf_scores))
+model<span style="color:#f92672">.</span>fit(X, Y)
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>sqrt(np<span style="color:#f92672">.</span>mean((model<span style="color:#f92672">.</span>predict(X) <span style="color:#f92672">-</span> Y) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)))
+</code></pre></div><pre><code>0.6398387033219061 +/- 0.003251331489796278
+0.007189687605693499
+</code></pre>
+<p>The accuracy may not be high, but the error is pretty low. The imputed values with classifier are plotted in the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+sns<span style="color:#f92672">.</span>distplot(model<span style="color:#f92672">.</span>predict(X))
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Construction year imputed&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-construction_year-imputed.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-construction_year-imputed.png" alt="Imputed well construction year"></p>
+<h2 id="imputing-construction-year">Imputing <code>construction year</code></h2>
+<p>The code can be refactored to include the imputation of <code>construction_year</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> cross_val_score
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_data</span>() <span style="color:#f92672">-&gt;</span> tuple:
+    <span style="color:#66d9ef">return</span> (
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/4910797b-ee55-40a7-8668-10efd5c1b960.csv&#34;</span>),
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv&#34;</span>),
+        pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/0bf8bc6e-30d0-4c50-956a-603fc693d966.csv&#34;</span>),
+    )
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clean_data</span>(train: pd<span style="color:#f92672">.</span>DataFrame, test: pd<span style="color:#f92672">.</span>DataFrame) <span style="color:#f92672">-&gt;</span> tuple:
+    train<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+    test<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;recorded_by&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+
+    train[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;train&#34;</span>
+    test[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>
+    temp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+        (
+            train[
+                [
+                    <span style="color:#e6db74">&#34;source&#34;</span>,
+                    <span style="color:#e6db74">&#34;id&#34;</span>,
+                    <span style="color:#e6db74">&#34;latitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;longitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;region_code&#34;</span>,
+                    <span style="color:#e6db74">&#34;district_code&#34;</span>,
+                ]
+            ],
+            test[
+                [
+                    <span style="color:#e6db74">&#34;source&#34;</span>,
+                    <span style="color:#e6db74">&#34;id&#34;</span>,
+                    <span style="color:#e6db74">&#34;latitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;longitude&#34;</span>,
+                    <span style="color:#e6db74">&#34;region_code&#34;</span>,
+                    <span style="color:#e6db74">&#34;district_code&#34;</span>,
+                ]
+            ],
+        )
+    )
+
+    region_imputation <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>]]
+        <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;region_code&#34;</span>)
+        <span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+    )
+    region_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;r-latitude-median&#34;</span>,
+        <span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;r-longitude-median&#34;</span>,
+    ]
+
+    district_imputation <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[train[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>]]
+        <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;district_code&#34;</span>)
+        <span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;median&#34;</span>])
+    )
+    district_imputation<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [
+        <span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;d-latitude-median&#34;</span>,
+        <span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>,
+        <span style="color:#e6db74">&#34;d-longitude-median&#34;</span>,
+    ]
+
+    missing <span style="color:#f92672">=</span> (
+        temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>, :]
+        <span style="color:#f92672">.</span>merge(region_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;region_code&#34;</span>)
+        <span style="color:#f92672">.</span>merge(district_imputation, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;district_code&#34;</span>)
+    )
+    missing<span style="color:#f92672">.</span>drop(
+        [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True
+    )
+
+    nonmissing <span style="color:#f92672">=</span> temp<span style="color:#f92672">.</span>loc[temp[<span style="color:#e6db74">&#34;longitude&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">29</span>, :]<span style="color:#f92672">.</span>copy()
+    nonmissing[<span style="color:#e6db74">&#34;r-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;r-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-latitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-latitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;latitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-longitude-mean&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing[<span style="color:#e6db74">&#34;d-longitude-median&#34;</span>] <span style="color:#f92672">=</span> nonmissing[<span style="color:#e6db74">&#34;longitude&#34;</span>]
+    nonmissing<span style="color:#f92672">.</span>drop(
+        [<span style="color:#e6db74">&#34;latitude&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;region_code&#34;</span>, <span style="color:#e6db74">&#34;district_code&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True
+    )
+
+    imputed <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat((missing, nonmissing))
+    train_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;train&#34;</span>,]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    test_impute <span style="color:#f92672">=</span> imputed<span style="color:#f92672">.</span>loc[imputed[<span style="color:#e6db74">&#34;source&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;test&#34;</span>,]<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;source&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    train <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>merge(train_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+    test <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>merge(test_impute, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>)
+
+    X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])<span style="color:#f92672">.</span>loc[
+        train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>, :
+    ]
+    Y <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>construction_year<span style="color:#f92672">.</span>ravel()
+    X<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#34;construction_year&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, inplace<span style="color:#f92672">=</span>True)
+    model <span style="color:#f92672">=</span> RandomForestClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)<span style="color:#f92672">.</span>fit(X, Y)
+
+    train[<span style="color:#e6db74">&#34;Construction_imputed&#34;</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(
+        train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>,
+        model<span style="color:#f92672">.</span>predict(
+            train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])<span style="color:#f92672">.</span>drop(
+                [<span style="color:#e6db74">&#34;construction_year&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+            )
+        ),
+        train[<span style="color:#e6db74">&#34;construction_year&#34;</span>]
+    )
+    test[<span style="color:#e6db74">&#34;Construction_imputed&#34;</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(
+        test[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>,
+        model<span style="color:#f92672">.</span>predict(
+            test<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])<span style="color:#f92672">.</span>drop(
+                [<span style="color:#e6db74">&#34;construction_year&#34;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+            )
+        ),
+        test[<span style="color:#e6db74">&#34;construction_year&#34;</span>]
+    )
+    train[<span style="color:#e6db74">&#34;Construction_year_missing&#34;</span>] <span style="color:#f92672">=</span> (train[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>astype(int)
+    test[<span style="color:#e6db74">&#34;Construction_year_missing&#34;</span>] <span style="color:#f92672">=</span> (test[<span style="color:#e6db74">&#34;construction_year&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>astype(int)
+
+    <span style="color:#66d9ef">return</span> train, test
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_model</span>(train: pd<span style="color:#f92672">.</span>DataFrame, labels: pd<span style="color:#f92672">.</span>DataFrame) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>array:
+    X <span style="color:#f92672">=</span> train<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;int64&#34;</span>, <span style="color:#e6db74">&#34;float64&#34;</span>])
+    Y <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>status_group<span style="color:#f92672">.</span>ravel()
+    model <span style="color:#f92672">=</span> RandomForestClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">2020</span>)
+    <span style="color:#66d9ef">return</span> cross_val_score(model, X, Y, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+
+
+train, test, labels <span style="color:#f92672">=</span> read_data()
+train, test <span style="color:#f92672">=</span> clean_data(train, test)
+rf_scores <span style="color:#f92672">=</span> train_model(train, labels)
+<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>mean(rf_scores), <span style="color:#e6db74">&#34;+/-&#34;</span>, np<span style="color:#f92672">.</span>std(rf_scores))
+</code></pre></div><pre><code>0.7203535353535354 +/- 0.00456253804285631
+</code></pre>
+<p>The new performances are moderately worse, but I will select the features and fine-tune the classifier later, after exploring all the variables.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;model1.csv&#34;</span>)
+performances <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+    (model1, pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#34;Model&#34;</span>: [<span style="color:#e6db74">&#34;Model 2&#34;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#34;Scores&#34;</span>: rf_scores}))
+)
+<span style="color:#66d9ef">print</span>(performances<span style="color:#f92672">.</span>to_markdown())
+</code></pre></div><table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">Model</th>
+<th align="right">Scores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="left">Model 0</td>
+<td align="right">0.721549</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">Model 0</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">Model 0</td>
+<td align="right">0.71229</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">Model 0</td>
+<td align="right">0.715488</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">Model 0</td>
+<td align="right">0.72862</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">Model 0</td>
+<td align="right">0.712963</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">Model 0</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">Model 0</td>
+<td align="right">0.711279</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">Model 0</td>
+<td align="right">0.704714</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">Model 0</td>
+<td align="right">0.720539</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="left">Model 1</td>
+<td align="right">0.721549</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="left">Model 1</td>
+<td align="right">0.727778</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="left">Model 1</td>
+<td align="right">0.720539</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="left">Model 1</td>
+<td align="right">0.722896</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="left">Model 1</td>
+<td align="right">0.731313</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="left">Model 1</td>
+<td align="right">0.721044</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="left">Model 1</td>
+<td align="right">0.726936</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="left">Model 1</td>
+<td align="right">0.715488</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="left">Model 1</td>
+<td align="right">0.712795</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="left">Model 1</td>
+<td align="right">0.721212</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td align="left">Model 2</td>
+<td align="right">0.719529</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">Model 2</td>
+<td align="right">0.726768</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">Model 2</td>
+<td align="right">0.715657</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="left">Model 2</td>
+<td align="right">0.720539</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="left">Model 2</td>
+<td align="right">0.725421</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="left">Model 2</td>
+<td align="right">0.720875</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="left">Model 2</td>
+<td align="right">0.726936</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="left">Model 2</td>
+<td align="right">0.712963</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="left">Model 2</td>
+<td align="right">0.716162</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="left">Model 2</td>
+<td align="right">0.718687</td>
+</tr>
+</tbody>
+</table>
+<p>Graphically:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">12</span>))
+sns<span style="color:#f92672">.</span>boxplot(x<span style="color:#f92672">=</span>performances[<span style="color:#e6db74">&#34;Scores&#34;</span>], y<span style="color:#f92672">=</span>performances[<span style="color:#e6db74">&#34;Model&#34;</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;&#34;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Accuracy for Random Forest&#34;</span>)
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;img/piu-performance_model2.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bbox_inches<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tight&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/piu-performance_model2.png" alt="Update performances"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">performances<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;model2.csv&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/python/" rel="tag">Python</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/classification/" rel="tag">Classification</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/model-training/" rel="tag">Model Training</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/imputation/" rel="tag">Imputation</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/pandas/" rel="tag">pandas</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/seaborn/" rel="tag">seaborn</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/sklearn/" rel="tag">sklearn</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/random-forest/" rel="tag">Random Forest</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Marco Carnini avatar" src="/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Marco Carnini</span>
+	</div>
+	<div class="authorbox__description">
+		Data Scientist in a Belgian Fintech company. Passionate about Machine Learning and Data Science, I started using R. But then I grew up, and I started using only Python.
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/2020-13-04-imputing-coordinates/" rel="prev">
+			<span class="post-nav__caption">«&thinsp;Previous</span>
+			<p class="post-nav__post-title">Pump It Up – Data imputation</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			
+		</div>
+		
+<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Marco Carnini.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?thirdparty=1&always=1&blocking=1"></script>
+
+	</div>
+<script async defer src="/js/menu.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

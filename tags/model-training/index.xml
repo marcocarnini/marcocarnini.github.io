@@ -6,10 +6,19 @@
     <description>Recent content in Model Training on Personal Notes of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Apr 2020 22:32:15 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 15 Apr 2020 23:08:19 +0200</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.com/tags/model-training/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pump It Up – Imputing the construction year</title>
+      <link>http://marcocarnini.com/posts/2020-15-04-imputing-construction-year/</link>
+      <pubDate>Wed, 15 Apr 2020 23:08:19 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/posts/2020-15-04-imputing-construction-year/</guid>
+      <description>Imputing the construction year.</description>
+    </item>
     
     <item>
       <title>Pump It Up – Data imputation</title>
