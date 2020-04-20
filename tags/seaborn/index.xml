@@ -6,10 +6,19 @@
     <description>Recent content in seaborn on Personal Notes of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Apr 2020 23:08:19 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2020 23:37:19 +0200</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.com/tags/seaborn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pump It Up – Imputing the population</title>
+      <link>http://marcocarnini.com/posts/2020-20-04-imputing-population/</link>
+      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/posts/2020-20-04-imputing-population/</guid>
+      <description>Imputing the population.</description>
+    </item>
     
     <item>
       <title>Pump It Up – Imputing the construction year</title>
