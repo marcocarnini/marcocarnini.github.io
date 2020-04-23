@@ -97,6 +97,7 @@ if (!doNotTrack) {
     <li><a href="#print-tables-from-jupyter">Print tables from Jupyter</a></li>
     <li><a href="#render-trees-in-png">Render trees in png</a></li>
     <li><a href="#install-black">Install <code>black</code></a></li>
+    <li><a href="#render-math">Render math</a></li>
   </ul>
 </nav>
 	</div>
@@ -142,6 +143,27 @@ dotfile<span style="color:#f92672">.</span>close()
 <p><code>black</code> is a formatter for Python. I installed for Jupyter through</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">jupyter nbextension install https://github.com/drillan/jupyter-black/archive/master.zip --user
 jupyter nbextension enable jupyter-black-master/jupyter-black
+</code></pre></div><h2 id="render-math">Render math</h2>
+<p>Most of the equation can be rendered out of the box with Mathjax. However, for some environments (<em>e.g.</em>, cases) there can be some issues. For example (from <a href="https://mlnp-code.github.io/mlnp">a site with some of my projects</a>) instead of</p>
+<p><img src="/img/Annotazione1.png" alt="Correctly rendered equation"></p>
+<p>I got</p>
+<p><img src="/img/Annotazione2.png" alt="Wrongly rendered equation"></p>
+<p>The corresponding LaTeX expression is the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-latex" data-lang="latex"><span style="color:#e6db74">$$</span>
+\mathbb{I}<span style="color:#f92672">(</span>\Omega_i<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> \begin{cases}
+<span style="color:#ae81ff">1</span> &amp; x\in \Omega_i \\
+<span style="color:#ae81ff">0</span> &amp; x\notin \Omega_i \\
+\end{cases}
+<span style="color:#e6db74">$$</span>
+</code></pre></div><p>I found the solution from <a href="https://yihui.org/en/2018/07/latex-math-markdown/">this blog post</a>. In essence, add the following to the Markdown file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//yihui.org/js/math-code.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>and add a black tick before the<code>$$</code> (and after the closing one):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-latex" data-lang="latex">`<span style="color:#e6db74">$$</span>
+\mathbb{I}<span style="color:#f92672">(</span>\Omega_i<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> \begin{cases}
+<span style="color:#ae81ff">1</span> &amp; x\in \Omega_i \\
+<span style="color:#ae81ff">0</span> &amp; x\notin \Omega_i \\
+\end{cases}
+<span style="color:#e6db74">$$</span>`
 </code></pre></div>
 		</div>
 	</article>
