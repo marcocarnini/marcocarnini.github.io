@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Personal Notes of a Passionate Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Apr 2020 23:37:19 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2020 16:32:17 +0200</lastBuildDate>
     
 	<atom:link href="http://marcocarnini.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,72 @@
     <item>
       <title>Classification</title>
       <link>http://marcocarnini.com/tags/classification/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
       
       <guid>http://marcocarnini.com/tags/classification/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Model Training</title>
+      <link>http://marcocarnini.com/tags/model-training/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/model-training/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pandas</title>
+      <link>http://marcocarnini.com/tags/pandas/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>http://marcocarnini.com/tags/python/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>http://marcocarnini.com/tags/r/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Random Forest</title>
+      <link>http://marcocarnini.com/tags/random-forest/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/random-forest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>seaborn</title>
+      <link>http://marcocarnini.com/tags/seaborn/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/seaborn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sklearn</title>
+      <link>http://marcocarnini.com/tags/sklearn/</link>
+      <pubDate>Thu, 23 Apr 2020 16:32:17 +0200</pubDate>
+      
+      <guid>http://marcocarnini.com/tags/sklearn/</guid>
       <description></description>
     </item>
     
@@ -26,69 +89,6 @@
       <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
       
       <guid>http://marcocarnini.com/tags/imputation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Model Training</title>
-      <link>http://marcocarnini.com/tags/model-training/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/model-training/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>pandas</title>
-      <link>http://marcocarnini.com/tags/pandas/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/pandas/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>http://marcocarnini.com/tags/python/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>http://marcocarnini.com/tags/r/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Random Forest</title>
-      <link>http://marcocarnini.com/tags/random-forest/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/random-forest/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>seaborn</title>
-      <link>http://marcocarnini.com/tags/seaborn/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/seaborn/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sklearn</title>
-      <link>http://marcocarnini.com/tags/sklearn/</link>
-      <pubDate>Mon, 20 Apr 2020 23:37:19 +0200</pubDate>
-      
-      <guid>http://marcocarnini.com/tags/sklearn/</guid>
       <description></description>
     </item>
     
