@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on The Data Science Explorer</title>
+    <link>marcocarnini.com/tags/python/</link>
+    <description>Recent content in Python on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Euler Problem — Multiples of 3 and 5</title>
+      <link>marcocarnini.com/posts/euler1/</link>
+      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/euler1/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Training a First Model</title>
+      <link>marcocarnini.com/posts/trainingthefirstmodel/</link>
+      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/trainingthefirstmodel/</guid>
+      <description>In this article, I build the first model. As a first step, I generate a simple model ignoring any possible complication: I discard any columns containing missing values and all the categorical columns.
+I do not try to build new features nor to select the most relevant ones. Later, I will iteratively explore new features, impute missing data and encode the categorical variables.
+Reading the data As a first step, I read the data:</description>
+    </item>
+    
+    <item>
+      <title>Exploring the Data</title>
+      <link>marcocarnini.com/posts/settinguptheproject/</link>
+      <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/settinguptheproject/</guid>
+      <description>The starting point is Tabular Playground Series — Aug 2022: it is a binary classification problem on tabular data to familiarize with classification and Kaggle competitions.
+Structuring the project I start by storing the input files in the folder input:
+input/sample_submission.csv input/test.csv input/train.csv I create a folder for the processed data, processed_data. I save the notebooks in the scripts folder. I use the following poetry configuration file:
+[tool.poetry] name = &amp;#34;tabular&amp;#34; version = &amp;#34;0.</description>
+    </item>
+    
+    <item>
+      <title>Adding Plots to a Post</title>
+      <link>marcocarnini.com/posts/adding_plots/</link>
+      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/adding_plots/</guid>
+      <description>Introduction One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).
+Attaching an image In order to attach an image to a post, I follow this guide. I create a folder for the images under the static folder:</description>
+    </item>
+    
+    <item>
+      <title>Adding Markdown Tables to a Post</title>
+      <link>marcocarnini.com/posts/adding_tables/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/adding_tables/</guid>
+      <description>The intent of using Markdown and Hugo for my site is to directly export from a Jupyter notebook into a post. However, when I preview a dataframe with head and export the notebook, I obtain a HTML table that is not nicely rendered or styled. The intent is to export in pure Markdown, and let the Hugo theme dictate what the aspect of the table should be.
+The naive approach I start with the creation of a pandas dataframe in the first cell of a notebook:</description>
+    </item>
+    
+  </channel>
+</rss>

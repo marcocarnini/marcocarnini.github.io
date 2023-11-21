@@ -1,0 +1,49 @@
+baseURL = 'marcocarnini.com'
+languageCode = 'en-us'
+title = 'The Data Science Explorer'
+theme = 'bareMinimum'
+paginate = 10
+
+[menu]
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 10
+
+[[menu.main]]
+identifier = "series"
+name = "Series"
+url = "/series/"
+weight = 20
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 25
+
+[[menu.main]]
+identifier = "categories"
+name = "Categories"
+url = "/categories/"
+weight = 30
+
+[[menu.main]]
+identifier = "contact"
+name = "Contact"
+url = "/contact/"
+weight = 35
+
+[taxonomies]
+tags = 'tags'
+series = 'series'
+categories = 'categories'
+
+[markup.goldmark.renderer]
+unsafe= true

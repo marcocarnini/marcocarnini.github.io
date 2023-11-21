@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Exploring the Data</title>
+    
+</head>
+<body><div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="marcocarnini.com/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Exploring the Data</h1>
+
+
+<time datetime="2023-10-17">Oct 17, 2023</time>
+
+
+
+<a class="myposts" href="marcocarnini.com/tags/python">Python</a>
+
+
+<a class="myposts" href="marcocarnini.com/tags/machine-learning">Machine Learning</a>
+
+
+<a class="myposts" href="marcocarnini.com/tags/classification">Classification</a>
+
+
+<a class="myposts" href="marcocarnini.com/tags/kaggle">Kaggle</a>
+
+
+
+<br><br>
+<p>The starting point is <a href="https://www.kaggle.com/competitions/tabular-playground-series-aug-2022">Tabular Playground Series — Aug 2022</a>: it is a binary classification problem on tabular data to familiarize with classification and Kaggle competitions.</p>
+<h2 id="structuring-the-project">Structuring the project</h2>
+<p>I start by storing the input files in the folder <code>input</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>input/sample_submission.csv
+</span></span><span style="display:flex;"><span>input/test.csv
+</span></span><span style="display:flex;"><span>input/train.csv
+</span></span></code></pre></div><p>I create a folder for the processed data, <code>processed_data</code>. I save the notebooks in the <code>scripts</code> folder. I use the following <code>poetry</code> configuration file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">tool</span>.<span style="color:#a6e22e">poetry</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;tabular&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;0.1.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">authors</span> = [<span style="color:#e6db74">&#34;Marco Carnini &lt;marcocarnini@gmail.com&gt;&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">readme</span> = <span style="color:#e6db74">&#34;README.md&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">tool</span>.<span style="color:#a6e22e">poetry</span>.<span style="color:#a6e22e">dependencies</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">python</span> = <span style="color:#e6db74">&#34;^3.11,&lt;3.13&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">numpy</span> = <span style="color:#e6db74">&#34;^1.26.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">scikit-learn</span> = <span style="color:#e6db74">&#34;^1.3.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pandas</span> = <span style="color:#e6db74">&#34;^2.1.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">matplotlib</span> = <span style="color:#e6db74">&#34;^3.8.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jupyter</span> = <span style="color:#e6db74">&#34;^1.0.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">notebook</span> = <span style="color:#e6db74">&#34;^7.0.6&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tabulate</span> = <span style="color:#e6db74">&#34;^0.9.0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">build-system</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">requires</span> = [<span style="color:#e6db74">&#34;poetry-core&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">build-backend</span> = <span style="color:#e6db74">&#34;poetry.core.masonry.api&#34;</span>
+</span></span></code></pre></div><h2 id="reading-the-input-data">Reading the input data</h2>
+<p>As a starting point, I read the training data and calculate the number of rows and columns:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/train.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>print(df<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><pre><code>(26570, 26)
+</code></pre>
+<p>I do the same for the test set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>test <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/test.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>print(test<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><pre><code>(20775, 25)
+</code></pre>
+<p>The columns in the training data are the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>columns:
+</span></span><span style="display:flex;"><span>    print(i)
+</span></span></code></pre></div><pre><code>id
+product_code
+loading
+attribute_0
+attribute_1
+attribute_2
+attribute_3
+measurement_0
+measurement_1
+measurement_2
+measurement_3
+measurement_4
+measurement_5
+measurement_6
+measurement_7
+measurement_8
+measurement_9
+measurement_10
+measurement_11
+measurement_12
+measurement_13
+measurement_14
+measurement_15
+measurement_16
+measurement_17
+failure
+</code></pre>
+<p>The column <code>failure</code> is what I need to predict. The failures (<em>i.e.</em>, the entries with <code>failure</code> equal to one) are present with frequency:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(df[<span style="color:#e6db74">&#34;failure&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>mean()
+</span></span></code></pre></div><pre><code>0.21260820474219044
+</code></pre>
+<p>Thus the dataset is unbalanced. The fact that I need to calculate the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic"><code>AUC</code></a> as a metrics seems logical. I inspect also the format for the submission: I need to use the <code>id</code> to match the expected results. A preview of the file is the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> display
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> Markdown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>submission <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../input/sample_submission.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>display(Markdown(submission<span style="color:#f92672">.</span>head()<span style="color:#f92672">.</span>to_markdown(index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)))
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th style="text-align:right">id</th>
+<th style="text-align:right">failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">26570</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">26571</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">26572</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">26573</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">26574</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-a-baseline-model">Creating a baseline model</h2>
+<p>In order to assess the correct format of the submissions, and for reference when training the data, I start by submitting a model where all the occurrences are predicted to belong to the most frequent class (<em>i.e.</em>, no failure).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>submission[<span style="color:#e6db74">&#34;failure&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>submission<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;baseline.csv&#34;</span>, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><p>As expected, the results are not very interesting:</p>
+<p><img src="/images/tabular_baseline.png" alt="Baseline Performance"></p>
+<p>In the next posts, I will focus on building an actual model.</p>
+
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>

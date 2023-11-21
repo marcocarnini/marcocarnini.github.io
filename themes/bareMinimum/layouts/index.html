@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div>
+  <h1 class="title">{{ .Site.Title }}</h1>
+  <ul class="all-posts">
+    {{ range (where .Paginator.Pages "Type" "posts")}}
+    <div class="post-box">
+      <div class="post_index_title">{{.Title}}</div>
+      <div class="second-row">
+      <div class="post_index_description">{{.Description}}</div>
+      <div class="post_link"><a href="{{.Permalink}}">Read more</a></div>
+      </div>
+      <div class="post_index_wordcount">Words: {{.WordCount}}</div>
+      <div class="post_index_date">{{time.Format "2 January 2006" .Date}}</div>
+      <div class="post_index_tags">Tags: {{ with .Params.tags }}{{ delimit . ", " }}{{ end }}</div>
+    </div>
+  </ul>
+</div>
+{{ end }}
+{{ template "_internal/pagination.html" . }}
+{{ end }}

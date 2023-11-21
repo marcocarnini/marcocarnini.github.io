@@ -1,0 +1,12 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ range .Paginator.Pages.ByPublishDate.Reverse }}
+  <h2><a class="taxonomy-title">{{ .Title }}</a></h2>
+  <ul>
+  {{ range .Pages.ByPublishDate.Reverse }}
+  <li><a class="taxonomy-post" href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+  </ul>
+{{ end }}
+{{ template "_internal/pagination.html" . }}
+{{ end }}

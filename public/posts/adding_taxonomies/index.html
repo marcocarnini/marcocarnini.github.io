@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Adding Taxonomies</title>
+    
+</head>
+<body><div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="marcocarnini.com/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Adding Taxonomies</h1>
+
+
+<time datetime="2023-10-10">Oct 10, 2023</time>
+
+
+
+<a class="myposts" href="marcocarnini.com/tags/hugo">Hugo</a>
+
+
+
+<br><br>
+<p>I discovered Hugo when reviewing <a href="https://www.manning.com/books/hugo-in-action"><em>Hugo in Action</em></a> from <a href="https://www.manning.com/">Manning</a>. But I understood the potential of the tool only when looking for a theme for a new site — and then discoveries the different taxonomies that were normally supported.</p>
+<p>For this site, I discovered that</p>
+<ul>
+<li>Series of posts are supported,</li>
+<li>Tags, and</li>
+<li>Categories</li>
+</ul>
+<p>I wanted to use all of them, thus I started by including in all the posts a different incipit. For this post, for example, I add the category <code>Blogging</code> and the tag <code>Hugo</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: <span style="color:#e6db74">&#34;Adding Taxonomies&#34;</span>
+</span></span><span style="display:flex;"><span>date: 2023-10-10
+</span></span><span style="display:flex;"><span>draft: false
+</span></span><span style="display:flex;"><span>series: <span style="color:#e6db74">&#34;Creating this site&#34;</span>
+</span></span><span style="display:flex;"><span>categories: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Blogging&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>tags: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Hugo&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>---
+</span></span></code></pre></div><p>Additionally, I need to change my <code>hugo.toml</code> file to include not only the <code>About</code> tab, but also:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;about&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;About&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/about/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;series&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Series&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/series/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;tags&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Tags&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/tags/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">25</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;categories&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Categories&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/categories/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;contact&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Contact&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/contact/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">35</span>
+</span></span></code></pre></div>
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>

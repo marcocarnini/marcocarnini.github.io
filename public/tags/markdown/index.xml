@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on The Data Science Explorer</title>
+    <link>marcocarnini.com/tags/markdown/</link>
+    <description>Recent content in Markdown on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Adding Markdown Tables to a Post</title>
+      <link>marcocarnini.com/posts/adding_tables/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/adding_tables/</guid>
+      <description>The intent of using Markdown and Hugo for my site is to directly export from a Jupyter notebook into a post. However, when I preview a dataframe with head and export the notebook, I obtain a HTML table that is not nicely rendered or styled. The intent is to export in pure Markdown, and let the Hugo theme dictate what the aspect of the table should be.
+The naive approach I start with the creation of a pandas dataframe in the first cell of a notebook:</description>
+    </item>
+    
+  </channel>
+</rss>

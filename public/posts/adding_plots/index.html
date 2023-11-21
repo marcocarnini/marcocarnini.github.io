@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Adding Plots to a Post</title>
+    
+</head>
+<body><div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="marcocarnini.com/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="marcocarnini.com/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Adding Plots to a Post</h1>
+
+
+<time datetime="2023-10-09">Oct 9, 2023</time>
+
+
+
+<a class="myposts" href="marcocarnini.com/tags/hugo">Hugo</a>
+
+
+<a class="myposts" href="marcocarnini.com/tags/python">Python</a>
+
+
+<a class="myposts" href="marcocarnini.com/tags/matplotlib">Matplotlib</a>
+
+
+
+<br><br>
+<h2 id="introduction">Introduction</h2>
+<p>One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).</p>
+<h2 id="attaching-an-image">Attaching an image</h2>
+<p>In order to attach an image to a post, I follow <a href="https://stackoverflow.com/questions/71501256/how-to-insert-an-image-in-my-post-on-hugo">this guide</a>. I create a folder for the images under the <code>static</code> folder:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir static/images
+</span></span></code></pre></div><p>I will store the images in this folder, and include them using the syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![](/images/image.png)
+</span></span></code></pre></div><h2 id="on-a-fresh-ubuntu-image-on-wsl">On a fresh Ubuntu image on WSL</h2>
+<p>At first, I create a small dataset for creating an example plot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;A&#34;</span>: [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;B&#34;</span>: [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><p><img src="/images/plot_example.png" alt="First Example Plot"></p>
+<p>I know, this is boring. It is just that I do not dare to consider as a reference style the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> plt<span style="color:#f92672">.</span>xkcd():
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example_xkcd.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><pre><code>findfont: Font family 'xkcd' not found.
+findfont: Font family 'xkcd Script' not found.
+findfont: Font family 'Humor Sans' not found.
+</code></pre>
+<p><img src="/images/plot_example_xkcd.png" alt="First Attempt with xkcs style — Missing Fonts"></p>
+<p>As I got error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>findfont: Font family <span style="color:#e6db74">&#39;xkcd&#39;</span> not found.
+</span></span></code></pre></div><p>I found on <a href="https://stackoverflow.com/questions/8753835/how-to-get-a-list-of-all-the-fonts-currently-available-for-matplotlib">Stack overflow</a> how to get the list of available fonts:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.font_manager
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.core.display <span style="color:#f92672">import</span> HTML
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_html</span>(fontname):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&lt;p&gt;</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">: &lt;span style=&#39;font-family:</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">; font-size: 24px;&#39;&gt;</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">&lt;/p&gt;&#34;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>        font<span style="color:#f92672">=</span>fontname
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        make_html(font)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> font <span style="color:#f92672">in</span> sorted(
+</span></span><span style="display:flex;"><span>            set([f<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> matplotlib<span style="color:#f92672">.</span>font_manager<span style="color:#f92672">.</span>fontManager<span style="color:#f92672">.</span>ttflist])
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>HTML(<span style="color:#e6db74">&#34;&lt;div style=&#39;column-count: 2;&#39;&gt;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&lt;/div&gt;&#34;</span><span style="color:#f92672">.</span>format(code))
+</span></span></code></pre></div><p>Resulting in the following result:</p>
+<!-- raw HTML omitted -->
+<p>I follow the following <a href="https://stackoverflow.com/questions/39614381/how-to-get-xkcd-font-working-in-matplotlib">Stackoverflow post</a> to install the <code>fonts-humor-sans</code> fonts together with <code>roboto</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install fonts-humor-sans
+</span></span><span style="display:flex;"><span>sudo apt-get install fonts-roboto
+</span></span></code></pre></div><p>Then, I delete the <code>matplotlib</code> cache:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -r ~/.cache/matplotlib
+</span></span></code></pre></div><p>I restart my Jupyter notebook, and check against the newly available fonts. On a Debian Machine, I got the following lines (notice the presence of the new fonts):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        make_html(font)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> font <span style="color:#f92672">in</span> sorted(
+</span></span><span style="display:flex;"><span>            set([f<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> matplotlib<span style="color:#f92672">.</span>font_manager<span style="color:#f92672">.</span>fontManager<span style="color:#f92672">.</span>ttflist])
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>HTML(<span style="color:#e6db74">&#34;&lt;div style=&#39;column-count: 2;&#39;&gt;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&lt;/div&gt;&#34;</span><span style="color:#f92672">.</span>format(code))
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<p>Then, I produce the same plot using the <code>Raboto</code> font:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.family&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Roboto&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example_roboto.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><p><img src="/images/plot_example_roboto.png" alt="Plot using Roboto Fonts"></p>
+<p>I increase the fonts (to size 20) in the plot to increase readability; I remove the label on the ordinate axis for not forcing the reader to an effort in reading a rotated text. The result is the following:</p>
+<p><img src="/images/plot_example_roboto_edited.png" alt="Plot using Roboto Fonts — Increased readability"></p>
+
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>
