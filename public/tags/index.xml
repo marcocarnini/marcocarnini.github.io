@@ -6,20 +6,11 @@
     <description>Recent content in Tags on The Data Science Explorer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hugo</title>
-      <link>marcocarnini.com/tags/hugo/</link>
-      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mathematics</title>
       <link>marcocarnini.com/tags/mathematics/</link>
-      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
       <guid>marcocarnini.com/tags/mathematics/</guid>
       <description></description>
@@ -28,81 +19,9 @@
     <item>
       <title>Python</title>
       <link>marcocarnini.com/tags/python/</link>
-      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
       <guid>marcocarnini.com/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Classification</title>
-      <link>marcocarnini.com/tags/classification/</link>
-      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/classification/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Kaggle</title>
-      <link>marcocarnini.com/tags/kaggle/</link>
-      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/kaggle/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Machine Learning</title>
-      <link>marcocarnini.com/tags/machine-learning/</link>
-      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Random Forest</title>
-      <link>marcocarnini.com/tags/random-forest/</link>
-      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/random-forest/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Matplotlib</title>
-      <link>marcocarnini.com/tags/matplotlib/</link>
-      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/matplotlib/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Jupyter</title>
-      <link>marcocarnini.com/tags/jupyter/</link>
-      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/jupyter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Markdown</title>
-      <link>marcocarnini.com/tags/markdown/</link>
-      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/markdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>LaTeX</title>
-      <link>marcocarnini.com/tags/latex/</link>
-      <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/tags/latex/</guid>
       <description></description>
     </item>
     

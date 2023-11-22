@@ -6,11 +6,23 @@
     <description>Recent content in Mathematics on The Data Science Explorer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/mathematics/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Euler Problem — Multiples of 3 and 5</title>
+      <title>Euler Problem — Largest Prime Factor</title>
+      <link>marcocarnini.com/posts/euler3/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>marcocarnini.com/posts/euler3/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Euler Problem 1 — Multiples of 3 and 5</title>
       <link>marcocarnini.com/posts/euler1/</link>
-      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
       <guid>marcocarnini.com/posts/euler1/</guid>
       <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:

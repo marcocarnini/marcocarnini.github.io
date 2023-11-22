@@ -6,40 +6,13 @@
     <description>Recent content in Series on The Data Science Explorer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/series/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Creating a Hugo Theme</title>
-      <link>marcocarnini.com/series/creating-a-hugo-theme/</link>
-      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/series/creating-a-hugo-theme/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Problems from Project Euler</title>
       <link>marcocarnini.com/series/problems-from-project-euler/</link>
-      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
       <guid>marcocarnini.com/series/problems-from-project-euler/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tabular Playground Series — August 2022</title>
-      <link>marcocarnini.com/series/tabular-playground-series-august-2022/</link>
-      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/series/tabular-playground-series-august-2022/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Creating this site</title>
-      <link>marcocarnini.com/series/creating-this-site/</link>
-      <pubDate>Tue, 10 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>marcocarnini.com/series/creating-this-site/</guid>
       <description></description>
     </item>
     

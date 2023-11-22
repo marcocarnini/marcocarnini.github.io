@@ -2,107 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>marcocarnini.com/categories/blogging/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>marcocarnini.com/categories/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/series/creating-a-hugo-theme/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/hugo/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/improving_homepage/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/series/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/</loc>
-    <lastmod>2023-10-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/creating_a_theme/</loc>
-    <lastmod>2023-10-29T00:00:00+00:00</lastmod>
+    <loc>marcocarnini.com/posts/euler3/</loc>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/posts/euler1/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/tags/mathematics/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>marcocarnini.com/posts/</loc>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/series/problems-from-project-euler/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/categories/programming/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/tags/python/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/tags/classification/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
+    <loc>marcocarnini.com/series/</loc>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/categories/data-science/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
+    <loc>marcocarnini.com/tags/</loc>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/tags/kaggle/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/machine-learning/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/random-forest/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/series/tabular-playground-series-august-2022/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/trainingthefirstmodel/</loc>
-    <lastmod>2023-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/settinguptheproject/</loc>
-    <lastmod>2023-10-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/adding_taxonomies/</loc>
-    <lastmod>2023-10-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/series/creating-this-site/</loc>
-    <lastmod>2023-10-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/adding_plots/</loc>
-    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/matplotlib/</loc>
-    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/adding_tables/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/jupyter/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/markdown/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/adding_latex_capabilities/</loc>
-    <lastmod>2023-10-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/tags/latex/</loc>
-    <lastmod>2023-10-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>marcocarnini.com/posts/building_this_site/</loc>
-    <lastmod>2023-09-30T00:00:00+00:00</lastmod>
+    <loc>marcocarnini.com/</loc>
+    <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/about/</loc>
+    <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>marcocarnini.com/contact/</loc>
+    <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url>
 </urlset>
