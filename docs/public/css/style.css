@@ -1,0 +1,112 @@
+:root {
+  --first: #333D51;
+  --second: #D3AC2B;
+  --third: #CBD0D8;
+  --forth: #F4F3EA; 
+}
+
+body{
+  background-color: var(--forth);
+  font-family: "Trebuchet MS",Arial,Roboto,sans-serif;
+  width: 45rem;
+  text-align: justify;
+  text-justify: inter-word;
+  margin: auto; /* https://blog.hubspot.com/website/center-text-in-css*/
+}
+
+h1,h2,h3{
+  background-color: var(--first);
+  border-radius: 0.8rem;
+  color: var(--forth);
+  font-weight: 900;
+  padding-left: 0.5rem;
+}
+
+p > code{
+  font-weight: 1000;
+  color: var(--second);
+  font-size: 1.05rem;
+}
+
+blockquote {
+  background: var(--third);
+  border-left: 0.5rem solid black;
+  margin: 1.5rem 0.5rem;
+  padding: 0.5rem 0.5rem;
+  font-style: oblique;
+}
+
+blockquote p {
+  display: inline;
+}
+
+ul.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+li.page-item {
+  list-style-type: none;
+  border: 0.5rem;
+  border-color: var(--forth);
+  border-style: solid;
+  text-align: justify;
+  font-size: 1.05rem;
+  background: var(--lightgrey);
+  font-weight: 900;
+  padding: 0.5rem;
+}
+
+li.page-item.disabled {
+  display: none;
+}
+
+ul.all-posts {
+  padding: 0;
+  border: 0;
+}
+
+div.post-box {
+  display: rows;
+  flex-direction: columns;
+  background: var(--third);
+  border: 0.5rem solid var(--forth);
+  padding: 0.5rem;
+}
+
+div.post_index_title {
+  font-weight: 900;
+  font-size: 1.2rem;
+  order: 1;
+}
+
+div.second-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+a.nav-link {
+  color: var(--forth);
+  font-weight: 900;
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: rows;
+  justify-content: space-between;
+  background-color: var(--first);
+}
+
+p.footer {
+  padding-top: 4rem;
+}
+
+a.myposts {
+  display: none;
+}

@@ -1,4 +1,4 @@
-baseURL = 'marcocarnini.com'
+baseURL = '/'
 languageCode = 'en-us'
 title = 'The Data Science Explorer'
 theme = 'bareMinimum'
