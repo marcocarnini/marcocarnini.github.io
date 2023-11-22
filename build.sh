@@ -1,3 +1,4 @@
+rm -fr docs
 hugo
 mv public docs
 eval `ssh-agent`
