@@ -85,6 +85,62 @@ all the test failed.
 
 ## Solution
 
+The idea is to use brute force: I iterate through all the integers starting from 2 (the first prime number) and the the value provided as input (``x``); I initialize the ``current_max_divisor`` to 1:
+
+```python
+import math
+
+
+def largest_prime_factor(x: int) -> int:
+    current_max_divisor = 1
+    i = 2
+
+    while i <= x:
+        i = i + 1
+```
+
+I test whether the current ``i`` is a divisor for ``x`` with the following:
+
+```python
+(x % i) == 0
+```
+
+I iterate over the powers of ``i``, dividing as long as the power of ``i`` is a divisor for ``x``. Take for example ``x=24`` and let ``i=2``. Then i keep dividing by 2 as long as ``x`` can no longer be divided by the power of two. Thus the code snippet:
+
+```python
+while (x % i) == 0:
+  current_max_divisor = i
+  x = x // i
+``` 
+
+at the first iteration:
+
+```python
+24 % 2 == 0
+```
+
+the condition is true, then ``current_max_divisor`` is 2. I divide ``x`` (and replace it) with ``24//2`` (integer division). Now, ``i`` remains equal to 2, ``x`` is 12. The condition
+
+```python
+12 % 2 == 0
+```
+
+it still true, thus I divide ``x`` by 2 again. 
+
+```python
+6 % 2 == 0
+```
+
+is still holds true, thus I further divide by 2. 
+
+```python
+3 % 2 == 0
+```
+
+is false; then, in increment ``i`` by one; thus, ``i=3``. I can divide 3 by ``i``, obtaining a new value for ``current_max_divisor``. Now, ``x`` is equal to 1, thus I exit the loop.
+
+To summarize, the final code is:
+
 ```python
 import math
 
@@ -102,3 +158,8 @@ def largest_prime_factor(x: int) -> int:
     return int(current_max_divisor)
 ```
 
+and the result can be obtained by:
+
+```python
+largest_prime_factor(600851475143)
+```

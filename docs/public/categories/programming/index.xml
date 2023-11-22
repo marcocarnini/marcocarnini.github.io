@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming on The Data Science Explorer</title>
+    <link>/categories/programming/</link>
+    <description>Recent content in Programming on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Euler Problem — Largest Prime Factor</title>
+      <link>/posts/euler3/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler3/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Euler Problem 1 — Multiples of 3 and 5</title>
+      <link>/posts/euler1/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler1/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+  </channel>
+</rss>
