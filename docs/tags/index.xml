@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on The Data Science Explorer</title>
-    <link>marcocarnini.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on The Data Science Explorer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="marcocarnini.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mathematics</title>
-      <link>marcocarnini.com/tags/mathematics/</link>
+      <link>/tags/mathematics/</link>
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
-      <guid>marcocarnini.com/tags/mathematics/</guid>
+      <guid>/tags/mathematics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>marcocarnini.com/tags/python/</link>
+      <link>/tags/python/</link>
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
       
-      <guid>marcocarnini.com/tags/python/</guid>
+      <guid>/tags/python/</guid>
       <description></description>
     </item>
     

@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>marcocarnini.com/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/posts/euler3/</loc>
+    <loc>/posts/euler3/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/posts/euler1/</loc>
+    <loc>/posts/euler1/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/tags/mathematics/</loc>
+    <loc>/tags/mathematics/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/series/problems-from-project-euler/</loc>
+    <loc>/series/problems-from-project-euler/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/categories/programming/</loc>
+    <loc>/categories/programming/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/tags/python/</loc>
+    <loc>/tags/python/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/series/</loc>
+    <loc>/series/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/</loc>
+    <loc>/</loc>
     <lastmod>2023-11-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>marcocarnini.com/contact/</loc>
+    <loc>/contact/</loc>
     <lastmod>2023-10-01T00:00:00+00:00</lastmod>
   </url>
 </urlset>
