@@ -1,5 +1,5 @@
 ---
-title: "Euler Problem — Largest Prime Factor"
+title: "Euler Problem 3 — Largest Prime Factor"
 date: 2023-11-21
 draft: false
 math: true
