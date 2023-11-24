@@ -1,6 +1,6 @@
 ---
 title: "Euler Problem 1 — Multiples of 3 and 5"
-date: 2023-11-21
+date: 2023-11-19
 draft: false
 math: true
 series: "Problems from Project Euler"

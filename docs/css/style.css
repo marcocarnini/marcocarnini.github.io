@@ -110,3 +110,22 @@ p.footer {
 a.myposts {
   display: none;
 }
+
+th {
+  background: var(--first);
+  padding-right: 1rem;
+  padding-left: 1rem;
+  color: white;
+}
+
+td {
+  background: var(--forth);
+  padding-right: 1rem;
+  padding-left: 1rem;
+  color: black;
+}
+
+table {
+  border: 0.1rem solid;
+  border-color: var(--first);
+}

@@ -8,18 +8,6 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Euler Problem 1 — Multiples of 3 and 5</title>
-      <link>/posts/euler1/</link>
-      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/euler1/</guid>
-      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
-The first one-hundred or so problems are generally considered to be easier than the problems which follow.
-In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
-as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
-    </item>
-    
-    <item>
       <title>Euler Problem 3 — Largest Prime Factor</title>
       <link>/posts/euler3/</link>
       <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
@@ -29,6 +17,28 @@ as long as any discussion clearly aims to instruct methods, not just provide ans
 The first one-hundred or so problems are generally considered to be easier than the problems which follow.
 In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
 as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Euler Problem 1 — Multiples of 3 and 5</title>
+      <link>/posts/euler1/</link>
+      <pubDate>Sun, 19 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler1/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Adding Markdown Tables to a Post</title>
+      <link>/posts/adding_tables/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adding_tables/</guid>
+      <description>The intent of using Markdown and Hugo for my site is to directly export from a Jupyter notebook into a post. However, when I preview a dataframe with head and export the notebook, I obtain a HTML table that is not nicely rendered or styled. The intent is to export in pure Markdown, and let the Hugo theme dictate what the aspect of the table should be.
+The naive approach I start with the creation of a pandas dataframe in the first cell of a notebook:</description>
     </item>
     
   </channel>
