@@ -35,16 +35,22 @@
     <loc>/posts/euler1/</loc>
     <lastmod>2023-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/adding_tables/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
+    <loc>/posts/adding_plots/</loc>
+    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/blogging/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/series/creating-this-site/</loc>
-    <lastmod>2023-10-04T00:00:00+00:00</lastmod>
+    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/hugo/</loc>
+    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/matplotlib/</loc>
+    <lastmod>2023-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/adding_tables/</loc>
     <lastmod>2023-10-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/jupyter/</loc>

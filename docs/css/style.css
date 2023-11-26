@@ -129,3 +129,10 @@ table {
   border: 0.1rem solid;
   border-color: var(--first);
 }
+
+img {
+  max-width: 100%;
+  border: 0.1rem solid var(--first);
+  border-radius: 2rem;
+  width: 45rem;
+}

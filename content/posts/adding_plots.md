@@ -1,7 +1,7 @@
 ---
 title: "Adding Plots to a Post"
 date: 2023-10-09
-draft: true
+draft: false
 series: "Creating this site"
 categories: ["Blogging"]
 tags: ["Hugo", "Python", "Matplotlib"]
@@ -10,9 +10,9 @@ description: "Adding plots and images to a post."
 
 One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).
 
-## Attaching an image
+## How to attach an image with Hugo
 
-In order to attach an image to a post, I follow [this guide](https://stackoverflow.com/questions/71501256/how-to-insert-an-image-in-my-post-on-hugo). I create a folder for the images under the ``static`` folder:
+In order to attach an image to a post, I follow [this Stackoverflow post](https://stackoverflow.com/questions/71501256/how-to-insert-an-image-in-my-post-on-hugo). I create a folder for the images under the ``static`` folder:
 
 ```bash
 mkdir static/images
@@ -53,7 +53,7 @@ plt.savefig("plot_example.png", dpi=300)
     
 ![First Example Plot](/images/plot_example.png)
 
-I know, this is boring. It is just that I do not dare to consider as a reference style the following:
+I know, this is boring. It is just that I do not dare to consider as a reference style the following ``xkcd``-like:
 
 ```python
 with plt.xkcd():
@@ -71,15 +71,15 @@ with plt.xkcd():
     findfont: Font family 'xkcd Script' not found.
     findfont: Font family 'Humor Sans' not found.
     
-![First Attempt with xkcs style — Missing Fonts](/images/plot_example_xkcd.png)
+![First Attempt with xkcd style — Missing Fonts](/images/plot_example_xkcd.png)
 
-As I got error:
+Unfortunately, I got the following error:
     
 ```bash
 findfont: Font family 'xkcd' not found.
 ```
 
-I found on [Stack overflow](https://stackoverflow.com/questions/8753835/how-to-get-a-list-of-all-the-fonts-currently-available-for-matplotlib) how to get the list of available fonts: 
+I found on [Stackoverflow](https://stackoverflow.com/questions/8753835/how-to-get-a-list-of-all-the-fonts-currently-available-for-matplotlib) how to get the list of available fonts:
 
 ```python
 import matplotlib.font_manager
@@ -128,7 +128,7 @@ Resulting in the following result:
 <p>cmsy10: <span style='font-family:cmsy10; font-size: 24px;'>cmsy10</p>
 <p>cmtt10: <span style='font-family:cmtt10; font-size: 24px;'>cmtt10</p></div>
 
-I follow the following [Stackoverflow post](https://stackoverflow.com/questions/39614381/how-to-get-xkcd-font-working-in-matplotlib) to install the ``fonts-humor-sans`` fonts together with ``roboto``:
+I follow this [other post](https://stackoverflow.com/questions/39614381/how-to-get-xkcd-font-working-in-matplotlib) to install the ``fonts-humor-sans`` fonts together with ``roboto``:
 
 ```bash
 sudo apt-get install fonts-humor-sans
@@ -262,7 +262,9 @@ plt.scatter(df["A"], df["B"], s=100)
 plt.grid()
 plt.savefig("plot_example_roboto.png", dpi=300)
 ```
-    
+
+obtaining:
+
 ![Plot using Roboto Fonts](/images/plot_example_roboto.png)
    
 I increase the fonts (to size 20) in the plot to increase readability; I remove the label on the ordinate axis for not forcing the reader to an effort in reading a rotated text. The result is the following:

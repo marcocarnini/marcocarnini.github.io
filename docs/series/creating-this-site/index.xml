@@ -6,7 +6,17 @@
     <description>Recent content in Creating this site on The Data Science Explorer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="/series/creating-this-site/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="/series/creating-this-site/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Adding Plots to a Post</title>
+      <link>/posts/adding_plots/</link>
+      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adding_plots/</guid>
+      <description>One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).
+How to attach an image with Hugo In order to attach an image to a post, I follow this Stackoverflow post. I create a folder for the images under the static folder:</description>
+    </item>
+    
     <item>
       <title>Adding Markdown Tables to a Post</title>
       <link>/posts/adding_tables/</link>
