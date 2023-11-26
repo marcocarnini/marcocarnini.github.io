@@ -1,12 +1,12 @@
 ---
 title: "Euler Problem 2 — Even Fibonacci Numbers"
 date: 2023-11-20
-draft: true
+draft: false
 math: true
 series: "Problems from Project Euler"
 categories: ["Programming"]
 tags: ["Python", "Mathematics"]
-description: "Euler Problem 2 — Summing the multiples of 3 and 5."
+description: "Euler Problem 2 — Even Fibonacci Numbers."
 ---
 
 [Project Euler](https://projecteuler.net/about) hosts interesting mathematical/programming challenges. Quoting the site itself:
@@ -25,7 +25,69 @@ $$1, 2, 3, 5, 8, 13, 21, 34, 55, 89, \ldots$$
 
 ## Creating the test cases
 
+I start by manually creating the test cases; by *N* I mean the upper limit to consider for summing the Fibonacci number. The problem is asking for \\(N\\leq 4 000 000\\).
+
+* For *N* equals to 5, the expected result is 1.
+* For *N* equals to 11, the expected result is 10.
+* For *N* equals to 35, the expected result is 44.
+* For *N* equals to 145, the expected result is 188.
+
+
+In term of Python code, the tests in file ``test_euler2.py`` are the following:
+
+```python
+import pytest
+from euler import even_fibonacci_number
+
+
+def test_0():
+    assert even_fibonacci_number(5) == 2
+
+def test_1():
+    assert even_fibonacci_number(11) == 10
+
+def test_2():
+    assert even_fibonacci_number(35) == 44
+
+def test_3():
+    assert even_fibonacci_number(145) == 188
+```
+
 ## The reasoning for getting the solution
+
+In this case, I just use a brute force approach; rather than using recursion, I keep track with two auxiliary variables that store the values of the last two Fibonacci numbers (\\(n_0\\) and \\(n_1\\)).
+
+The even Fibonacci numbers in the sequence starting with 1 and 2 occurs every three numbers starting for the second element. In other terms, the even Fibonacci numbers are the those at position \\(3k+1\\)), with \\(k \in \mathbb{K}\\).
+Thus, I create a variable to keep track if the Fibonacci number I am calculating is in the \\(3k+1\\))-th position (variable ``counter`` in the code below).
+
+Finally, I retur the sum.
 
 ## The implementation
 
+The code I wrote is the following:
+
+```python
+import math
+
+
+def even_fibonacci_number(N: int) -> int:
+    n_0 = 1
+    n_1 = 2
+    counter = 0
+    total = 0
+
+    while n_0 < N:
+        n_new = n_0 + n_1
+        n_0 = n_1
+        n_1 = n_new
+        counter += 1
+        if (counter % 3) == 1:
+            total += n_0
+
+    return int(total)
+```
+I got the answer by calling:
+
+```python
+even_fibonacci_number(4_000_000)
+```
