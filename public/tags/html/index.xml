@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTML on The Data Science Explorer</title>
+    <link>/tags/html/</link>
+    <description>Recent content in HTML on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating a Theme from Scratch</title>
+      <link>/posts/creating_a_theme/</link>
+      <pubDate>Sun, 29 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/creating_a_theme/</guid>
+      <description>While I like many themes from the corresponding hugo page, with this post I start creating a new theme for my own site, with the goal to explore and use some CSS (and Markdown/Hugo, of course). For simplcity, I start from a completely new site with hugo:
+hugo new site from_scratch The folder themes is empty. Normally, I would clone an existing theme, and start configuring. In this example, however, I want to work step by step.</description>
+    </item>
+    
+  </channel>
+</rss>

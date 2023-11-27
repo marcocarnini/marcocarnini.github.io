@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Data Science Explorer</title>
+    <link>/</link>
+    <description>Recent content on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Euler Problem 3 — Largest Prime Factor</title>
+      <link>/posts/euler3/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler3/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Euler Problem 2 — Even Fibonacci Numbers</title>
+      <link>/posts/euler2/</link>
+      <pubDate>Mon, 20 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler2/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Euler Problem 1 — Multiples of 3 and 5</title>
+      <link>/posts/euler1/</link>
+      <pubDate>Sun, 19 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/euler1/</guid>
+      <description>Project Euler hosts interesting mathematical/programming challenges. Quoting the site itself:
+The first one-hundred or so problems are generally considered to be easier than the problems which follow.
+In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted
+as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</description>
+    </item>
+    
+    <item>
+      <title>Creating a Theme from Scratch</title>
+      <link>/posts/creating_a_theme/</link>
+      <pubDate>Sun, 29 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/creating_a_theme/</guid>
+      <description>While I like many themes from the corresponding hugo page, with this post I start creating a new theme for my own site, with the goal to explore and use some CSS (and Markdown/Hugo, of course). For simplcity, I start from a completely new site with hugo:
+hugo new site from_scratch The folder themes is empty. Normally, I would clone an existing theme, and start configuring. In this example, however, I want to work step by step.</description>
+    </item>
+    
+    <item>
+      <title>Adding Plots to a Post</title>
+      <link>/posts/adding_plots/</link>
+      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adding_plots/</guid>
+      <description>One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).
+How to attach an image with Hugo In order to attach an image to a post, I follow this Stackoverflow post. I create a folder for the images under the static folder:</description>
+    </item>
+    
+    <item>
+      <title>Adding Markdown Tables to a Post</title>
+      <link>/posts/adding_tables/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adding_tables/</guid>
+      <description>The intent of using Markdown and Hugo for my site is to directly export from a Jupyter notebook into a post. However, when I preview a dataframe with head and export the notebook, I obtain a HTML table that is not nicely rendered or styled. The intent is to export in pure Markdown, and let the Hugo theme dictate what the aspect of the table should be.
+The naive approach I start with the creation of a pandas dataframe in the first cell of a notebook:</description>
+    </item>
+    
+    <item>
+      <title>Adding LaTeX Capabilities</title>
+      <link>/posts/adding_latex_capabilities/</link>
+      <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/adding_latex_capabilities/</guid>
+      <description>I find very complicated to write about Data Science without using mathematical formulas. That is why I think that the Medium editor is very unconvenient for scientific writing. While obviously there are many pubblications on Data Science, the articles turns to be quite shallow in term of details. I love and daily read from Towards Data Science and MLearning.ai; however, there is an obvious restraint from writing too much Math-dense articles.</description>
+    </item>
+    
+    <item>
+      <title>About this site</title>
+      <link>/about/</link>
+      <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>By education I am a Theoretical Physicist, then a Mathematical Engineer, and finally a Bioinformatics Post-Doc. Then, I worked as Teaching Assistant, a Lecturer, a Tutor.
+Then, after so much time spent in Academia, I left it for exploring the Real World outside, and leveraged the Machine Learning I studied during the Post-Doc. I worked happily as Data Scientist, until my employer gave me the chance to learn wearing different hats, exploring new roles.</description>
+    </item>
+    
+    <item>
+      <title>How to reach me</title>
+      <link>/contact/</link>
+      <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>You can find on
+Linkedin. github. and of course via email (@gmail.com). </description>
+    </item>
+    
+    <item>
+      <title>Building a new site</title>
+      <link>/posts/building_this_site/</link>
+      <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/building_this_site/</guid>
+      <description>This is the first post on my site, and I dedicate it to describe step by step how I created it. I use Hugo and simple Markdown — and quite a lot of command line. I am working on a testing Debian (WSL, to be specific).
+How to set up the site To start I install hugo,
+sudo apt-get install hugo hugo version	The version I am using at the time of writing this is:</description>
+    </item>
+    
+  </channel>
+</rss>

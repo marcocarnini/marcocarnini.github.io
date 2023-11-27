@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Series on The Data Science Explorer</title>
+    <link>/series/</link>
+    <description>Recent content in Series on The Data Science Explorer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="/series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Problems from Project Euler</title>
+      <link>/series/problems-from-project-euler/</link>
+      <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/series/problems-from-project-euler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Creating a Hugo Theme</title>
+      <link>/series/creating-a-hugo-theme/</link>
+      <pubDate>Sun, 29 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/series/creating-a-hugo-theme/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Creating this site</title>
+      <link>/series/creating-this-site/</link>
+      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/series/creating-this-site/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

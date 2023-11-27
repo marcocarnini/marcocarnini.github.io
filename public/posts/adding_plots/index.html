@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Adding Plots to a Post</title>
+    
+</head>
+<body><link rel="shortcut icon" type="image/png" href="favicon.ico">
+<div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Adding Plots to a Post</h1>
+
+
+<time datetime="2023-10-09">9 October, 2023</time>
+
+
+
+<a class="myposts" href="/tags/hugo">Hugo</a>
+
+
+<a class="myposts" href="/tags/python">Python</a>
+
+
+<a class="myposts" href="/tags/matplotlib">Matplotlib</a>
+
+
+
+<br><br>
+<p>One of the main requirements in order to publish Jupyter notebooks is to be able to attach images to the posts. In this post, I focus on how to attach images, and in finding a standard for the images (like fonts, background and style).</p>
+<h2 id="how-to-attach-an-image-with-hugo">How to attach an image with Hugo</h2>
+<p>In order to attach an image to a post, I follow <a href="https://stackoverflow.com/questions/71501256/how-to-insert-an-image-in-my-post-on-hugo">this Stackoverflow post</a>. I create a folder for the images under the <code>static</code> folder:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir static/images
+</span></span></code></pre></div><p>I will store the images in this folder, and include them using the syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![](/images/image.png)
+</span></span></code></pre></div><h2 id="on-a-fresh-ubuntu-image-on-wsl">On a fresh Ubuntu image on WSL</h2>
+<p>At first, I create a small dataset for creating an example plot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;A&#34;</span>: [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;B&#34;</span>: [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><p><img src="/images/plot_example.png" alt="First Example Plot"></p>
+<p>I know, this is boring. It is just that I do not dare to consider as a reference style the following <code>xkcd</code>-like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> plt<span style="color:#f92672">.</span>xkcd():
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example_xkcd.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><pre><code>findfont: Font family 'xkcd' not found.
+findfont: Font family 'xkcd Script' not found.
+findfont: Font family 'Humor Sans' not found.
+</code></pre>
+<p><img src="/images/plot_example_xkcd.png" alt="First Attempt with xkcd style — Missing Fonts"></p>
+<p>Unfortunately, I got the following error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>findfont: Font family <span style="color:#e6db74">&#39;xkcd&#39;</span> not found.
+</span></span></code></pre></div><p>I found on <a href="https://stackoverflow.com/questions/8753835/how-to-get-a-list-of-all-the-fonts-currently-available-for-matplotlib">Stackoverflow</a> how to get the list of available fonts:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.font_manager
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.core.display <span style="color:#f92672">import</span> HTML
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">make_html</span>(fontname):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&lt;p&gt;</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">: &lt;span style=&#39;font-family:</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">; font-size: 24px;&#39;&gt;</span><span style="color:#e6db74">{font}</span><span style="color:#e6db74">&lt;/p&gt;&#34;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>        font<span style="color:#f92672">=</span>fontname
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        make_html(font)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> font <span style="color:#f92672">in</span> sorted(
+</span></span><span style="display:flex;"><span>            set([f<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> matplotlib<span style="color:#f92672">.</span>font_manager<span style="color:#f92672">.</span>fontManager<span style="color:#f92672">.</span>ttflist])
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>HTML(<span style="color:#e6db74">&#34;&lt;div style=&#39;column-count: 2;&#39;&gt;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&lt;/div&gt;&#34;</span><span style="color:#f92672">.</span>format(code))
+</span></span></code></pre></div><p>Resulting in the following result:</p>
+<div style='column-count: 2;'><p>DejaVu Sans: <span style='font-family:DejaVu Sans; font-size: 24px;'>DejaVu Sans</p>
+<p>DejaVu Sans Display: <span style='font-family:DejaVu Sans Display; font-size: 24px;'>DejaVu Sans Display</p>
+<p>DejaVu Sans Mono: <span style='font-family:DejaVu Sans Mono; font-size: 24px;'>DejaVu Sans Mono</p>
+<p>DejaVu Serif: <span style='font-family:DejaVu Serif; font-size: 24px;'>DejaVu Serif</p>
+<p>DejaVu Serif Display: <span style='font-family:DejaVu Serif Display; font-size: 24px;'>DejaVu Serif Display</p>
+<p>STIXGeneral: <span style='font-family:STIXGeneral; font-size: 24px;'>STIXGeneral</p>
+<p>STIXNonUnicode: <span style='font-family:STIXNonUnicode; font-size: 24px;'>STIXNonUnicode</p>
+<p>STIXSizeFiveSym: <span style='font-family:STIXSizeFiveSym; font-size: 24px;'>STIXSizeFiveSym</p>
+<p>STIXSizeFourSym: <span style='font-family:STIXSizeFourSym; font-size: 24px;'>STIXSizeFourSym</p>
+<p>STIXSizeOneSym: <span style='font-family:STIXSizeOneSym; font-size: 24px;'>STIXSizeOneSym</p>
+<p>STIXSizeThreeSym: <span style='font-family:STIXSizeThreeSym; font-size: 24px;'>STIXSizeThreeSym</p>
+<p>STIXSizeTwoSym: <span style='font-family:STIXSizeTwoSym; font-size: 24px;'>STIXSizeTwoSym</p>
+<p>Ubuntu: <span style='font-family:Ubuntu; font-size: 24px;'>Ubuntu</p>
+<p>Ubuntu Condensed: <span style='font-family:Ubuntu Condensed; font-size: 24px;'>Ubuntu Condensed</p>
+<p>Ubuntu Mono: <span style='font-family:Ubuntu Mono; font-size: 24px;'>Ubuntu Mono</p>
+<p>cmb10: <span style='font-family:cmb10; font-size: 24px;'>cmb10</p>
+<p>cmex10: <span style='font-family:cmex10; font-size: 24px;'>cmex10</p>
+<p>cmmi10: <span style='font-family:cmmi10; font-size: 24px;'>cmmi10</p>
+<p>cmr10: <span style='font-family:cmr10; font-size: 24px;'>cmr10</p>
+<p>cmss10: <span style='font-family:cmss10; font-size: 24px;'>cmss10</p>
+<p>cmsy10: <span style='font-family:cmsy10; font-size: 24px;'>cmsy10</p>
+<p>cmtt10: <span style='font-family:cmtt10; font-size: 24px;'>cmtt10</p></div>
+<p>I follow this <a href="https://stackoverflow.com/questions/39614381/how-to-get-xkcd-font-working-in-matplotlib">other post</a> to install the <code>fonts-humor-sans</code> fonts together with <code>roboto</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install fonts-humor-sans
+</span></span><span style="display:flex;"><span>sudo apt-get install fonts-roboto
+</span></span></code></pre></div><p>Then, I delete the <code>matplotlib</code> cache:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -r ~/.cache/matplotlib
+</span></span></code></pre></div><p>I restart my Jupyter notebook, and check against the newly available fonts. On a Debian Machine, I got the following lines (notice the presence of the new fonts):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        make_html(font)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> font <span style="color:#f92672">in</span> sorted(
+</span></span><span style="display:flex;"><span>            set([f<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> matplotlib<span style="color:#f92672">.</span>font_manager<span style="color:#f92672">.</span>fontManager<span style="color:#f92672">.</span>ttflist])
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>HTML(<span style="color:#e6db74">&#34;&lt;div style=&#39;column-count: 2;&#39;&gt;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&lt;/div&gt;&#34;</span><span style="color:#f92672">.</span>format(code))
+</span></span></code></pre></div><div style='column-count: 2;'><p>C059: <span style='font-family:C059; font-size: 24px;'>C059</p>
+<p>D050000L: <span style='font-family:D050000L; font-size: 24px;'>D050000L</p>
+<p>DejaVu Math TeX Gyre: <span style='font-family:DejaVu Math TeX Gyre; font-size: 24px;'>DejaVu Math TeX Gyre</p>
+<p>DejaVu Sans: <span style='font-family:DejaVu Sans; font-size: 24px;'>DejaVu Sans</p>
+<p>DejaVu Sans Display: <span style='font-family:DejaVu Sans Display; font-size: 24px;'>DejaVu Sans Display</p>
+<p>DejaVu Sans Mono: <span style='font-family:DejaVu Sans Mono; font-size: 24px;'>DejaVu Sans Mono</p>
+<p>DejaVu Serif: <span style='font-family:DejaVu Serif; font-size: 24px;'>DejaVu Serif</p>
+<p>DejaVu Serif Display: <span style='font-family:DejaVu Serif Display; font-size: 24px;'>DejaVu Serif Display</p>
+<p>Droid Sans Fallback: <span style='font-family:Droid Sans Fallback; font-size: 24px;'>Droid Sans Fallback</p>
+<p>FontAwesome: <span style='font-family:FontAwesome; font-size: 24px;'>FontAwesome</p>
+<p>Humor Sans: <span style='font-family:Humor Sans; font-size: 24px;'>Humor Sans</p>
+<p>Latin Modern Math: <span style='font-family:Latin Modern Math; font-size: 24px;'>Latin Modern Math</p>
+<p>Latin Modern Mono: <span style='font-family:Latin Modern Mono; font-size: 24px;'>Latin Modern Mono</p>
+<p>Latin Modern Mono Caps: <span style='font-family:Latin Modern Mono Caps; font-size: 24px;'>Latin Modern Mono Caps</p>
+<p>Latin Modern Mono Light: <span style='font-family:Latin Modern Mono Light; font-size: 24px;'>Latin Modern Mono Light</p>
+<p>Latin Modern Mono Light Cond: <span style='font-family:Latin Modern Mono Light Cond; font-size: 24px;'>Latin Modern Mono Light Cond</p>
+<p>Latin Modern Mono Prop: <span style='font-family:Latin Modern Mono Prop; font-size: 24px;'>Latin Modern Mono Prop</p>
+<p>Latin Modern Mono Prop Light: <span style='font-family:Latin Modern Mono Prop Light; font-size: 24px;'>Latin Modern Mono Prop Light</p>
+<p>Latin Modern Mono Slanted: <span style='font-family:Latin Modern Mono Slanted; font-size: 24px;'>Latin Modern Mono Slanted</p>
+<p>Latin Modern Roman: <span style='font-family:Latin Modern Roman; font-size: 24px;'>Latin Modern Roman</p>
+<p>Latin Modern Roman Caps: <span style='font-family:Latin Modern Roman Caps; font-size: 24px;'>Latin Modern Roman Caps</p>
+<p>Latin Modern Roman Demi: <span style='font-family:Latin Modern Roman Demi; font-size: 24px;'>Latin Modern Roman Demi</p>
+<p>Latin Modern Roman Dunhill: <span style='font-family:Latin Modern Roman Dunhill; font-size: 24px;'>Latin Modern Roman Dunhill</p>
+<p>Latin Modern Roman Slanted: <span style='font-family:Latin Modern Roman Slanted; font-size: 24px;'>Latin Modern Roman Slanted</p>
+<p>Latin Modern Roman Unslanted: <span style='font-family:Latin Modern Roman Unslanted; font-size: 24px;'>Latin Modern Roman Unslanted</p>
+<p>Latin Modern Sans: <span style='font-family:Latin Modern Sans; font-size: 24px;'>Latin Modern Sans</p>
+<p>Latin Modern Sans Demi Cond: <span style='font-family:Latin Modern Sans Demi Cond; font-size: 24px;'>Latin Modern Sans Demi Cond</p>
+<p>Latin Modern Sans Quotation: <span style='font-family:Latin Modern Sans Quotation; font-size: 24px;'>Latin Modern Sans Quotation</p>
+<p>Lato: <span style='font-family:Lato; font-size: 24px;'>Lato</p>
+<p>MathJax_AMS: <span style='font-family:MathJax_AMS; font-size: 24px;'>MathJax_AMS</p>
+<p>MathJax_Caligraphic: <span style='font-family:MathJax_Caligraphic; font-size: 24px;'>MathJax_Caligraphic</p>
+<p>MathJax_Fraktur: <span style='font-family:MathJax_Fraktur; font-size: 24px;'>MathJax_Fraktur</p>
+<p>MathJax_Main: <span style='font-family:MathJax_Main; font-size: 24px;'>MathJax_Main</p>
+<p>MathJax_Math: <span style='font-family:MathJax_Math; font-size: 24px;'>MathJax_Math</p>
+<p>MathJax_SansSerif: <span style='font-family:MathJax_SansSerif; font-size: 24px;'>MathJax_SansSerif</p>
+<p>MathJax_Script: <span style='font-family:MathJax_Script; font-size: 24px;'>MathJax_Script</p>
+<p>MathJax_Size1: <span style='font-family:MathJax_Size1; font-size: 24px;'>MathJax_Size1</p>
+<p>MathJax_Size2: <span style='font-family:MathJax_Size2; font-size: 24px;'>MathJax_Size2</p>
+<p>MathJax_Size3: <span style='font-family:MathJax_Size3; font-size: 24px;'>MathJax_Size3</p>
+<p>MathJax_Size4: <span style='font-family:MathJax_Size4; font-size: 24px;'>MathJax_Size4</p>
+<p>MathJax_Typewriter: <span style='font-family:MathJax_Typewriter; font-size: 24px;'>MathJax_Typewriter</p>
+<p>MathJax_Vector: <span style='font-family:MathJax_Vector; font-size: 24px;'>MathJax_Vector</p>
+<p>MathJax_Vector-Bold: <span style='font-family:MathJax_Vector-Bold; font-size: 24px;'>MathJax_Vector-Bold</p>
+<p>MathJax_WinChrome: <span style='font-family:MathJax_WinChrome; font-size: 24px;'>MathJax_WinChrome</p>
+<p>MathJax_WinIE6: <span style='font-family:MathJax_WinIE6; font-size: 24px;'>MathJax_WinIE6</p>
+<p>Nimbus Mono PS: <span style='font-family:Nimbus Mono PS; font-size: 24px;'>Nimbus Mono PS</p>
+<p>Nimbus Roman: <span style='font-family:Nimbus Roman; font-size: 24px;'>Nimbus Roman</p>
+<p>Nimbus Sans: <span style='font-family:Nimbus Sans; font-size: 24px;'>Nimbus Sans</p>
+<p>Nimbus Sans Narrow: <span style='font-family:Nimbus Sans Narrow; font-size: 24px;'>Nimbus Sans Narrow</p>
+<p>Noto Mono: <span style='font-family:Noto Mono; font-size: 24px;'>Noto Mono</p>
+<p>Noto Sans Mono: <span style='font-family:Noto Sans Mono; font-size: 24px;'>Noto Sans Mono</p>
+<p>P052: <span style='font-family:P052; font-size: 24px;'>P052</p>
+<p>Roboto: <span style='font-family:Roboto; font-size: 24px;'>Roboto</p>
+<p>Roboto Condensed: <span style='font-family:Roboto Condensed; font-size: 24px;'>Roboto Condensed</p>
+<p>STIXGeneral: <span style='font-family:STIXGeneral; font-size: 24px;'>STIXGeneral</p>
+<p>STIXNonUnicode: <span style='font-family:STIXNonUnicode; font-size: 24px;'>STIXNonUnicode</p>
+<p>STIXSizeFiveSym: <span style='font-family:STIXSizeFiveSym; font-size: 24px;'>STIXSizeFiveSym</p>
+<p>STIXSizeFourSym: <span style='font-family:STIXSizeFourSym; font-size: 24px;'>STIXSizeFourSym</p>
+<p>STIXSizeOneSym: <span style='font-family:STIXSizeOneSym; font-size: 24px;'>STIXSizeOneSym</p>
+<p>STIXSizeThreeSym: <span style='font-family:STIXSizeThreeSym; font-size: 24px;'>STIXSizeThreeSym</p>
+<p>STIXSizeTwoSym: <span style='font-family:STIXSizeTwoSym; font-size: 24px;'>STIXSizeTwoSym</p>
+<p>Standard Symbols PS: <span style='font-family:Standard Symbols PS; font-size: 24px;'>Standard Symbols PS</p>
+<p>TeX Gyre Adventor: <span style='font-family:TeX Gyre Adventor; font-size: 24px;'>TeX Gyre Adventor</p>
+<p>TeX Gyre Bonum: <span style='font-family:TeX Gyre Bonum; font-size: 24px;'>TeX Gyre Bonum</p>
+<p>TeX Gyre Chorus: <span style='font-family:TeX Gyre Chorus; font-size: 24px;'>TeX Gyre Chorus</p>
+<p>TeX Gyre Cursor: <span style='font-family:TeX Gyre Cursor; font-size: 24px;'>TeX Gyre Cursor</p>
+<p>TeX Gyre Heros: <span style='font-family:TeX Gyre Heros; font-size: 24px;'>TeX Gyre Heros</p>
+<p>TeX Gyre Heros Cn: <span style='font-family:TeX Gyre Heros Cn; font-size: 24px;'>TeX Gyre Heros Cn</p>
+<p>TeX Gyre Pagella: <span style='font-family:TeX Gyre Pagella; font-size: 24px;'>TeX Gyre Pagella</p>
+<p>TeX Gyre Schola: <span style='font-family:TeX Gyre Schola; font-size: 24px;'>TeX Gyre Schola</p>
+<p>TeX Gyre Termes: <span style='font-family:TeX Gyre Termes; font-size: 24px;'>TeX Gyre Termes</p>
+<p>URW Bookman: <span style='font-family:URW Bookman; font-size: 24px;'>URW Bookman</p>
+<p>URW Gothic: <span style='font-family:URW Gothic; font-size: 24px;'>URW Gothic</p>
+<p>Z003: <span style='font-family:Z003; font-size: 24px;'>Z003</p>
+<p>cmb10: <span style='font-family:cmb10; font-size: 24px;'>cmb10</p>
+<p>cmex10: <span style='font-family:cmex10; font-size: 24px;'>cmex10</p>
+<p>cmmi10: <span style='font-family:cmmi10; font-size: 24px;'>cmmi10</p>
+<p>cmr10: <span style='font-family:cmr10; font-size: 24px;'>cmr10</p>
+<p>cmss10: <span style='font-family:cmss10; font-size: 24px;'>cmss10</p>
+<p>cmsy10: <span style='font-family:cmsy10; font-size: 24px;'>cmsy10</p>
+<p>cmtt10: <span style='font-family:cmtt10; font-size: 24px;'>cmtt10</p>
+<p>dsrom10: <span style='font-family:dsrom10; font-size: 24px;'>dsrom10</p>
+<p>esint10: <span style='font-family:esint10; font-size: 24px;'>esint10</p>
+<p>eufm10: <span style='font-family:eufm10; font-size: 24px;'>eufm10</p>
+<p>msam10: <span style='font-family:msam10; font-size: 24px;'>msam10</p>
+<p>msbm10: <span style='font-family:msbm10; font-size: 24px;'>msbm10</p>
+<p>rsfs10: <span style='font-family:rsfs10; font-size: 24px;'>rsfs10</p>
+<p>stmary10: <span style='font-family:stmary10; font-size: 24px;'>stmary10</p>
+<p>wasy10: <span style='font-family:wasy10; font-size: 24px;'>wasy10</p></div>
+<p>Then, I produce the same plot using the <code>Raboto</code> font:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.size&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#34;font.family&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Roboto&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Abscissa&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Ordinates&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;My title&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;A&#34;</span>], df[<span style="color:#e6db74">&#34;B&#34;</span>], s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>grid()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#34;plot_example_roboto.png&#34;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)
+</span></span></code></pre></div><p>obtaining:</p>
+<p><img src="/images/plot_example_roboto.png" alt="Plot using Roboto Fonts"></p>
+<p>I increase the fonts (to size 20) in the plot to increase readability; I remove the label on the ordinate axis for not forcing the reader to an effort in reading a rotated text. The result is the following:</p>
+<p><img src="/images/plot_example_roboto_edited.png" alt="Plot using Roboto Fonts — Increased readability"></p>
+
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>

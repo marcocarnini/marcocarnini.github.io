@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Euler Problem 3 — Largest Prime Factor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+</head>
+<body><link rel="shortcut icon" type="image/png" href="favicon.ico">
+<div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Euler Problem 3 — Largest Prime Factor</h1>
+
+
+<time datetime="2023-11-21">21 November, 2023</time>
+
+
+
+<a class="myposts" href="/tags/python">Python</a>
+
+
+<a class="myposts" href="/tags/mathematics">Mathematics</a>
+
+
+
+<br><br>
+<p><a href="https://projecteuler.net/about">Project Euler</a> hosts interesting mathematical/programming challenges. Quoting the site itself:</p>
+<blockquote>
+<p>The first one-hundred or so problems are generally considered to be easier than the problems which follow.</p>
+</blockquote>
+<p>In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted</p>
+<blockquote>
+<p>as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</p>
+</blockquote>
+<p>The problem <a href="https://projecteuler.net/problem=3">can be found here</a>. For convenience, I include it here:</p>
+<blockquote>
+<p>The prime factors of 13195 are 5, 7, 13 and 29. What is the largest prime factor of the number 600851475143?</p>
+</blockquote>
+<h2 id="creating-the-test-cases">Creating the test cases</h2>
+<p>I start by manually creating the test cases.</p>
+<ul>
+<li>For <em>n</em> equals to 1, the expected result is 1.</li>
+<li>For <em>n</em> equals to 64, the expected result is 1.</li>
+<li>For <em>n</em> equals to 62, the expected result is 31.</li>
+<li>For <em>n</em> equals to 35, the expected result is 7.</li>
+<li>For <em>n</em> equals to 150, the expected result is 5.</li>
+<li>For <em>n</em> equals to 6, the expected result is 3.</li>
+<li>For <em>n</em> equals to 47, the expected result is 47.</li>
+</ul>
+<p>In term of Python code, the tests in file <code>test_euler3.py</code> are the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pytest
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> euler <span style="color:#f92672">import</span> largest_prime_factor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_0</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_1</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">64</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_2</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">62</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">31</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_3</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">35</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_4</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">150</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_5</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">6</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_6</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> largest_prime_factor(<span style="color:#ae81ff">47</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">47</span>
+</span></span></code></pre></div><p>Then, I create the template for the function that I need to implement in <code>euler.py</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">largest_prime_factor</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Naturally, if I start testing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pytest -v test_euler3.py
+</span></span></code></pre></div><p>all the test failed.</p>
+<h2 id="solution">Solution</h2>
+<p>The idea is to use brute force: I iterate through all the integers starting from 2 (the first prime number) and the the value provided as input (<code>x</code>); I initialize the <code>current_max_divisor</code> to 1:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">largest_prime_factor</span>(x: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    current_max_divisor <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> i <span style="color:#f92672">&lt;=</span> x:
+</span></span><span style="display:flex;"><span>        i <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>I test whether the current <code>i</code> is a divisor for <code>x</code> with the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(x <span style="color:#f92672">%</span> i) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>I iterate over the powers of <code>i</code>, dividing as long as the power of <code>i</code> is a divisor for <code>x</code>. Take for example <code>x=24</code> and let <code>i=2</code>. Then i keep dividing by 2 as long as <code>x</code> can no longer be divided by the power of two. Thus the code snippet:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (x <span style="color:#f92672">%</span> i) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>  current_max_divisor <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">=</span> x <span style="color:#f92672">//</span> i
+</span></span></code></pre></div><p>at the first iteration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">24</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>the condition is true, then <code>current_max_divisor</code> is 2. I divide <code>x</code> (and replace it) with <code>24//2</code> (integer division). Now, <code>i</code> remains equal to 2, <code>x</code> is 12. The condition</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">12</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>it still true, thus I divide <code>x</code> by 2 again.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">6</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>is still holds true, thus I further divide by 2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">3</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>is false; then, in increment <code>i</code> by one; thus, <code>i=3</code>. I can divide 3 by <code>i</code>, obtaining a new value for <code>current_max_divisor</code>. Now, <code>x</code> is equal to 1, thus I exit the loop.</p>
+<p>To summarize, the final code is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">largest_prime_factor</span>(x: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    current_max_divisor <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> i <span style="color:#f92672">&lt;=</span> x:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (x <span style="color:#f92672">%</span> i) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            current_max_divisor <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> x <span style="color:#f92672">//</span> i
+</span></span><span style="display:flex;"><span>        i <span style="color:#f92672">=</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(current_max_divisor)
+</span></span></code></pre></div><p>and the result can be obtained by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>largest_prime_factor(<span style="color:#ae81ff">600851475143</span>)
+</span></span></code></pre></div>
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>

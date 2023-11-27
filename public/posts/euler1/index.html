@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    
+    <title>The Data Science Explorer | Euler Problem 1 — Multiples of 3 and 5</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+</head>
+<body><link rel="shortcut icon" type="image/png" href="favicon.ico">
+<div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        
+        <a class="nav-link" href="/">
+        
+        
+        Home
+        </a>
+        
+        <a class="nav-link" href="/about/">
+        
+        
+        About
+        </a>
+        
+        <a class="nav-link" href="/series/">
+        
+        
+        Series
+        </a>
+        
+        <a class="nav-link" href="/tags/">
+        
+        
+        Tags
+        </a>
+        
+        <a class="nav-link" href="/categories/">
+        
+        
+        Categories
+        </a>
+        
+        <a class="nav-link" href="/contact/">
+        
+        
+        Contact
+        </a>
+        
+    </nav>
+</div>
+<div id="content">
+<h1>Euler Problem 1 — Multiples of 3 and 5</h1>
+
+
+<time datetime="2023-11-19">19 November, 2023</time>
+
+
+
+<a class="myposts" href="/tags/python">Python</a>
+
+
+<a class="myposts" href="/tags/mathematics">Mathematics</a>
+
+
+
+<br><br>
+<p><a href="https://projecteuler.net/about">Project Euler</a> hosts interesting mathematical/programming challenges. Quoting the site itself:</p>
+<blockquote>
+<p>The first one-hundred or so problems are generally considered to be easier than the problems which follow.</p>
+</blockquote>
+<p>In this post, I am presenting my solution to the first problem. I do not have the intention to spoil the problem for anyone. However, the solutions for the first 100 problems can be posted</p>
+<blockquote>
+<p>as long as any discussion clearly aims to instruct methods, not just provide answers, and does not directly threaten to undermine the enjoyment of solving later problems.</p>
+</blockquote>
+<p>The problem <a href="https://projecteuler.net/problem=1">can be found here</a>. For convenience, I quoted verbatim here:</p>
+<blockquote>
+<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Find the sum of all the multiples of 3 or 5 below 1000.</p>
+</blockquote>
+<h2 id="creating-the-test-cases">Creating the test cases</h2>
+<p>I start by manually creating the test cases. The multiples need to be smaller than an integer <em>N</em>.</p>
+<ul>
+<li>For <em>N</em> equals to 10, the example provided in the problem is 23.</li>
+<li>For <em>N</em> equals to 7, the multiples are 3, 5, 6. The expected result is 14.</li>
+<li>For <em>N</em> equals to 8, the multiples are 3, 5, 6. The expected result is 14.</li>
+<li>For <em>N</em> equals to 20, the multiples are 3, 5, 6, 9, 12, 15, 18. The expected result is 78.</li>
+<li>For <em>N</em> equals to 30, the multiples are 3, 5, 6, 9, 12, 15, 18, 20, 21, 24, 27. The expected result is 195.</li>
+</ul>
+<p>In term of Python code, the tests in file <code>test_euler1.py</code> are the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pytest
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> euler <span style="color:#f92672">import</span> multiples
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_0</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> multiples(<span style="color:#ae81ff">7</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_1</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> multiples(<span style="color:#ae81ff">8</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_2</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> multiples(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">23</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_3</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> multiples(<span style="color:#ae81ff">20</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">78</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_4</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> multiples(<span style="color:#ae81ff">30</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">195</span>
+</span></span></code></pre></div><p>Then, I create the template for the function that I need to implement in <code>euler.py</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">multiples</span>(N: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> N
+</span></span></code></pre></div><p>Naturally, if I start testing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pytest -v test_euler1.py
+</span></span></code></pre></div><p>all the test failed.</p>
+<h2 id="the-reasoning-for-getting-the-solution">The reasoning for getting the solution</h2>
+<p>The reasoning is the following:</p>
+<ul>
+<li>all the multiple of 3 can be written as \(3i\) with \(i \in \mathbb{N}\),</li>
+<li>all the multiplie of 5 can be written as \(5j\) with \(j \in \mathbb{N}\),</li>
+<li>all the multiple of 15 can be written as \(15k\) with \(k \in \mathbb{N}\).</li>
+</ul>
+<p>Thus, the sum of all the multiples of 3 smaller than \(N\) is:</p>
+<p>$$S_3=\sum_{i=1}^{i_\text{max}}3i$$</p>
+<p>Here, the \(i_\text{max}\) means that I have to limit the possible values of \(i\) to those that satisfy the condition \(3i&lt;N\). That is,</p>
+<p>$$i_\text{max} = \left \lfloor \frac{N-1}{3} \right \rfloor$$</p>
+<p>where \(\lfloor \cdot \rfloor\) is the floor function. The same reasoning applies to</p>
+<p>$$S_5=\sum_{j=1}^{j_\text{max}}5j$$
+$$j_\text{max} = \left \lfloor \frac{N-1}{5} \right \rfloor$$</p>
+<p>$$S_{15}=\sum_{k=1}^{k_\text{max}}15k$$
+$$i_\text{max} = \left \lfloor \frac{N-1}{15} \right \rfloor$$</p>
+<p>Thus, the quantity I want to measure is:</p>
+<p>$$S=S_3+S_5-S_{15}=\sum_{i=1}^{i_\text{max}}3i + \sum_{j=1}^{j_\text{max}}5j-\sum_{k=1}^{k_\text{max}}15k$$</p>
+<p>Here, I subtract $$S_{15}$$ because by summing the multiples of 3 and those of 5 separately, I would count twice the multiples of 15. Simplifying the expression above:</p>
+<p>$$S=3\sum_{i=1}^{i_\text{max}}i + 5\sum_{j=1}^{j_\text{max}}j-15\sum_{k=1}^{k_\text{max}}k$$</p>
+<p>Since the sum of the first \(M\) numbers is</p>
+<p>$$\sum_{l}^M l=\frac{M(M+1)}{2}.$$</p>
+<p>Thus, the formula for \(S\) can be rewritten as:</p>
+<p>$$S=3\frac{i_\text{max}(i_\text{max}+1)}{2}+5\frac{j_\text{max}(j_\text{max}+1)}{2}-15\frac{k_\text{max}(k_\text{max}+1)}{2}$$</p>
+<h2 id="the-implementation">The implementation</h2>
+<p>The implementation of the formula is quite straighforward:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">multiples</span>(N: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    i_m <span style="color:#f92672">=</span> (N <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    j_m <span style="color:#f92672">=</span> (N <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    k_m <span style="color:#f92672">=</span> (N <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> i_m <span style="color:#f92672">*</span> (i_m <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> j_m <span style="color:#f92672">*</span> (j_m <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> k_m <span style="color:#f92672">*</span> (k_m <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><p>Of course, all the test quoted above ran successfully.</p>
+<p>The final result can be obtained with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> euler <span style="color:#f92672">import</span> multiples
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mutiples(<span style="color:#ae81ff">1000</span>)
+</span></span></code></pre></div>
+
+        </div><p class="footer text-center">&copy; 2023 Marco Carnini</p>
+</body>
+</html>
