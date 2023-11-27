@@ -2,12 +2,34 @@
 title: "Adding a basic CSS to the theme"
 date: 2023-10-31
 draft: true
-tags: ["Hugo", "CSS"]
+tags: ["Hugo", "CSS", "HTML"]
 categories: ["Blogging"]
 series: "Creating a Hugo Theme"
 description: "How to create a basic CSS for a Hugo theme"
 math: true
 ---
+
+## Cretaing the favicon.io
+
+I add to to ``static`` folder the icon that I [downloaded from here](https://uxwing.com/artificial-intelligence-ai-chip-icon/), renaming to ``favicon.ico``. Then, I modify the theme file ``themes/bareMinimum/layouts/partials/header.html`` to be:
+
+````html
+<link rel="shortcut icon" type="image/png" href="favicon.ico">
+<div id="nav-border" class="container">
+    <nav id="nav" class="nav justify-content-center">
+        {{ range .Site.Menus.main }}
+        <a class="nav-link" href="{{ .URL }}">
+            {{ if .Pre }}
+            {{ $icon := printf "<i data-feather=\"%s\"></i> " .Pre | safeHTML }}
+            {{ $icon }}
+            {{ end }}
+            {{ $text := print .Name | safeHTML }}
+            {{ $text }}
+        </a>
+        {{ end }}
+    </nav>
+</div>
+```
 
 ## Setting the default fonts
 
@@ -319,7 +341,7 @@ td {
 }
 
 table {
-    border: 0.1rem solid;
+    border: 0.1rem solid var(--first);
     border-color: var(--first);
 }
 ```

@@ -1,26 +1,26 @@
 ---
 title: "Creating a Theme from Scratch"
 date: 2023-10-29
-draft: true
-tags: ["Hugo"]
+draft: false
+tags: ["Hugo", "HTML"]
 categories: ["Blogging"]
 series: "Creating a Hugo Theme"
 description: "How to start creating a Hugo theme from zero."
 ---
 
-## Starting
+While I like many themes from [the corresponding hugo page](https://themes.gohugo.io/), with this post I start creating a new theme for my own site, with the goal to explore and use some CSS (and Markdown/Hugo, of course). For simplcity, I start from a completely new site with ``hugo``:
 
 ```bash
 hugo new site from_scratch
 ```
 
-The folder ``themes`` is empty. Normally, I would clone an existing theme, and start configuring. In this example, however, I want to work step by step on the creation of my personal theme. I follow [this guide](https://retrolog.io/blog/creating-a-hugo-theme-from-scratch/).
+The folder ``themes`` is empty. Normally, I would clone an existing theme, and start configuring. In this example, however, I want to work step by step. For reference, I follow [this guide](https://retrolog.io/blog/creating-a-hugo-theme-from-scratch/). I create a completely new theme, and I call it ``bareMinimum``:
 
 ```bash
 hugo new theme bareMinimum
 ```
 
-leading to the following structure for the folder ``themes/bareMinimum``:
+This lead to the following structure for the folder ``themes/bareMinimum``:
 
 ```bash
 bareMinimum/
@@ -51,7 +51,7 @@ Then, I create a new post:
 hugo new content posts/creating_a_theme.md
 ```
 
-edit the ``hugo.toml`` file:
+and edit the ``hugo.toml`` file:
 
 ```toml
 baseURL = "/"
@@ -66,14 +66,14 @@ I build my site:
 hugo
 ```
 
-obtaining:
+obtaining (I cut the output to the first columns for clarity):
 
 ```
 Start building sites …
 hugo v0.113.0+extended linux/amd64 BuildDate=2023-08-30T08:06:23Z VendorInfo=debian:0.113.0-3
-WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "home": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
-WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
-WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "home": You should create a...
+WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "taxonomy": You should create a...
+WARN 2023/10/29 11:25:09 found no layout file for "html" for kind "taxonomy": You should create a...
 
                    | EN
 -------------------+-----
@@ -93,9 +93,7 @@ So, no *errors*, but some important warning. In the next session, I am going to 
 
 ## Creating the partials
 
-I keep following [retrolog.io guide](https://retrolog.io/blog/creating-a-hugo-theme-from-scratch/), but I choose not to include ``bootstrap``. I first create my ``themes/bareMinimum/layouts/partials/head.html``, which is (quoting retrolog.io):
-
-> This will be the place for metadata like the document title, character set, styles, scripts, and other meta information
+I keep following [retrolog.io guide](https://retrolog.io/blog/creating-a-hugo-theme-from-scratch/), but I choose not to include ``bootstrap``. I first create my ``themes/bareMinimum/layouts/partials/head.html``:
 
 ```html
 <head>
@@ -107,6 +105,9 @@ I keep following [retrolog.io guide](https://retrolog.io/blog/creating-a-hugo-th
     <title>{{ $title }}</title>
 </head>
 ```
+which is (quoting retrolog.io):
+
+> This will be the place for metadata like the document title, character set, styles, scripts, and other meta information
 
 Then, I create ``themes/bareMinimum/layouts/partials/header.html``:
 
@@ -127,15 +128,16 @@ Then, I create ``themes/bareMinimum/layouts/partials/header.html``:
 </div>
 ```
 
-and a footer ``themes/bareMinimum/layouts/partials/footer.html``:
+that represent the beginning of each page in the site, and a footer ``themes/bareMinimum/layouts/partials/footer.html``:
 
 ```html
 <p class="footer text-center">Copyright (c) {{ now.Format "2006"}} Marco Carnini</p>
 ```
+This is the bottom of each page, adding the copyright information.
 
 ## Default layouts
 
-As a first step, I create a layout for my homepage:
+As a first step, I create a minimalistic layout for my homepage (``themes/bareMinimum/layouts/index.html``):
 
 ```html
 {{ define "main" }}
@@ -161,7 +163,7 @@ I keep the ``themes/bareMinimum/layouts/_default/baseof.html`` as the initial, d
 </html>
 ```
 
-For ``themes/bareMinimum/layouts/_default/list.html``:
+For ``themes/bareMinimum/layouts/_default/list.html``, I consider the following:
 
 ```html
 {{ define "main" }}
@@ -202,4 +204,6 @@ The page with the list of all posts look like this:
 A single post, instead look like this:
 
 ![Post — Version 0.1](/images/Content01.png)
+
+Of course, some customization some styling are needed to improve: thus, I need to create a CSS for my theme.
 

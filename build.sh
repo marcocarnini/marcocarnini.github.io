@@ -8,3 +8,4 @@ git config user.name "Marco Carnini"
 git config user.email "marcocarnini@gmail.com"
 git add --all
 git commit -m "Updating site"
+echo "marcocarnini.com" > docs/CNAME

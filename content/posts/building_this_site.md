@@ -70,12 +70,12 @@ I got this error:
 ```bash
 Start building sites …
 hugo v0.113.0+extended linux/amd64 BuildDate=2023-08-30T08:06:23Z VendorInfo=debian:0.113.0-3
-ERROR 2023/10/01 15:54:31 render of "home" failed: "/home/marco/ancora/themes/calligraphy/layouts/_default/baseof.html:53:21": execute of template failed: template: _default/list.html:53:21: executing "_default/list.html" at <$image.Fit>: nil pointer evaluating resource.Resource.Fit
-ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/_default/baseof.html:53:21": execute of template failed: template: _default/taxonomy.html:53:21: executing "_default/taxonomy.html" at <$image.Fit>: nil pointer evaluating resource.Resource.Fit
-ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/_default/baseof.html:53:21": execute of template failed: template: authors/terms.html:53:21: executing "authors/terms.html" at <$image.Fit>: nil pointer evaluating resource.Resource.Fit
-ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/_default/baseof.html:53:21": execute of template failed: template: series/taxonomy.html:53:21: executing "series/taxonomy.html" at <$image.Fit>: nil pointer evaluating resource.Resource.Fit
+ERROR 2023/10/01 15:54:31 render of "home" failed: "/home/marco/ancora/themes/calligraphy/layouts/...
+ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/...
+ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/...
+ERROR 2023/10/01 15:54:31 render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/...
 Total in 227 ms
-Error: error building site: render: failed to render pages: render of "taxonomy" failed: "/home/marco/ancora/themes/calligraphy/layouts/_default/baseof.html:53:21": execute of template failed: template: _default/taxonomy.html:53:21: executing "_default/taxonomy.html" at <$image.Fit>: nil pointer evaluating resource.Resource.Fit
+Error: error building site: render: failed to render pages: render of "taxonomy" failed: "/home/marco/...
 ```
 
 Following the [instructions I found here](https://discourse.gohugo.io/t/range-image-resize-nil-pointer-evaluating-resource-resource-resize/41535), I create and ``img`` subfolder of ``assets``; then, I downloaded the icon [from here](https://pikwizard.com/s/photo/artificial+intelligence/) an image and store it in the ``assets`` folder 
@@ -98,7 +98,7 @@ I personally find the default text width a little to narrow. I read about the co
 ```toml
 # widths
 width-site = "65rem"
-width-content = "70ch" # Accepts any value. The optimal line length for readibility is 50-75 characters ("ch" unit).
+width-content = "70ch" # Accepts any value. The optimal line length for readibility is 50-75.
 width-content-min = "50ch" # Accepts only "ch" unit.
 width-aside = "35ch" # Accepts any value. The default is 1/5 of width-content.
 width-aside-min = "35ch" # Accepts only "ch" unit.
@@ -109,7 +109,7 @@ As I want to include mostly Python code, I refer to [PEP8](https://peps.python.o
 ```toml
 # widths
 width-site = "65rem"
-width-content = "99ch" # Accepts any value. The optimal line length for readibility is 50-75 characters ("ch" unit).
+width-content = "99ch" # Accepts any value. The optimal line length for readibility is 50-75.
 width-content-min = "50ch" # Accepts only "ch" unit.
 width-aside = "20ch" # Accepts any value. The default is 1/5 of width-content.
 width-aside-min = "35ch" # Accepts only "ch" unit.
