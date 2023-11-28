@@ -131,6 +131,8 @@ table {
 }
 
 img {
+  height: auto;
+  width: auto;
   max-width: 100%;
   border: 0.1rem solid var(--first);
   border-radius: 1rem;

@@ -7,7 +7,10 @@ categories: []
 series: ""
 description: ""
 ---
-<p style="text-align:center;"><img src="/images/profile.jpg" alt="Marco Carnini" width="200" height="200"></p>
+
+<div style="text-align:center;">
+<img src="/images/profile.jpg" alt="image" style="margin:auto;width:300px;height:auto;">
+</div>
 
 By education I am a Theoretical Physicist, then a Mathematical Engineer, and finally a Bioinformatics Post-Doc. Then, I worked as Teaching Assistant, a Lecturer, a Tutor.
 
